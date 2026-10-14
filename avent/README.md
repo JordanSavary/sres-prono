@@ -20,6 +20,25 @@ mêmes comptes, même session, même base MySQL. Tout vit dans ce dossier `avent
    comptent ni dans le classement ni dans les statistiques. **À désactiver avant le 1er décembre.**
 6. **Réglages** : *Admin → Réglages* (date de la case 1, rattrapage, essais, coefficient des jours boss).
 
+## Déploiement automatique (GitHub → LWS)
+
+Le workflow `.github/workflows/deploy.yml` envoie par FTP `avent/`, `login.php` et `header.php` à chaque push
+sur `main` (donc après la fusion d'une pull request), ou à la demande depuis l'onglet *Actions → Déploiement LWS →
+Run workflow*. Il n'envoie jamais `includes/db.php`, les fichiers SQL ni les images déjà téléversées en production.
+
+Secrets à créer dans GitHub (*Settings → Secrets and variables → Actions → New repository secret*) :
+
+| Secret | Valeur | Obligatoire |
+| --- | --- | --- |
+| `FTP_SERVER` | serveur FTP indiqué par LWS (ex. `ftp.sres-prono.fr`) | oui |
+| `FTP_USERNAME` | identifiant FTP | oui |
+| `FTP_PASSWORD` | mot de passe FTP | oui |
+| `FTP_SERVER_DIR` | dossier du site sur le serveur, avec `/` final (ex. `./` ou `/htdocs/`) ; c'est celui qui contient `login.php` | non (défaut `./`) |
+| `FTP_PROTOCOL` | `ftp` ou `ftps` (si LWS propose le FTP sécurisé, préférer `ftps`) | non (défaut `ftp`) |
+| `FTP_PORT` | port, si différent de 21 | non |
+
+La migration SQL (`sql/001_avent.sql`) reste à exécuter une seule fois à la main dans phpMyAdmin.
+
 ## Règles implémentées
 
 | Sujet | Règle |

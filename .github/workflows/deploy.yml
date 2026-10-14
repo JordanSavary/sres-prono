@@ -1,0 +1,51 @@
+name: Déploiement LWS
+
+# Déploie le calendrier de l'avent (dossier avent/ + login.php + header.php) par FTP
+# à chaque push sur main, ou à la demande (onglet Actions > Déploiement LWS > Run workflow).
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'avent/**'
+      - 'login.php'
+      - 'header.php'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-lws
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # On n'envoie que le strict nécessaire : jamais includes/db.php, jamais de SQL,
+      # jamais les images déjà téléversées en production (avent/uploads).
+      - name: Préparer les fichiers à envoyer
+        run: |
+          mkdir -p deploy
+          cp -r avent deploy/avent
+          cp login.php header.php deploy/
+          rm -rf deploy/avent/sql deploy/avent/README.md
+          find deploy/avent/uploads -type f ! -name '.htaccess' -delete
+
+      - name: Envoi par FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ${{ secrets.FTP_PROTOCOL || 'ftp' }}
+          port: ${{ secrets.FTP_PORT || '21' }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR || './' }}
+          local-dir: ./deploy/
+          # Ne supprime jamais ce qui existe déjà sur le serveur sans être suivi par le déploiement
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            avent/uploads/**
+            !avent/uploads/.htaccess
