@@ -1,0 +1,5 @@
+# Dossier des images téléversées : aucun script ne doit jamais s'y exécuter.
+# (Si l'hébergeur répond « erreur 500 » sur les images, supprimer ce fichier : voir avent/README.md.)
+<FilesMatch "(?i)\.(php[0-9]?|phtml|phar|pl|py|cgi|sh)$">
+    Require all denied
+</FilesMatch>

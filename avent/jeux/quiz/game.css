@@ -1,0 +1,10 @@
+.quiz-progression { margin: 0 0 .3rem; font-size: .85rem; opacity: .75; }
+.quiz-enonce { margin: 0 0 .9rem; font-size: 1.25rem; color: #2b1a10; }
+.quiz-options { display: grid; gap: .6rem; }
+.quiz-option {
+    padding: .8rem 1rem; text-align: left; font: 600 1rem 'Trebuchet MS', 'Segoe UI', system-ui, sans-serif;
+    color: #2b1a10; background: #fff; border: 2px solid #cdb994; border-radius: 12px; cursor: pointer;
+}
+.quiz-option:hover { border-color: #b3202a; background: #fff3f1; }
+.quiz-option.choisie { background: #e0b44c; border-color: #7d1520; }
+.quiz-options.verrou { pointer-events: none; }

@@ -17,6 +17,10 @@
             <i class="fa-solid fa-user"></i>
             <span>Mon compte</span>
         </a>
+        <a href="avent/index.php">
+            <i class="fa-solid fa-tree"></i>
+            <span>Avent</span>
+        </a>
         <a href="logout.php">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Déconnexion</span>
