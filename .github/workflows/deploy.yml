@@ -47,5 +47,3 @@ jobs:
           exclude: |
             **/.git*
             **/.git*/**
-            avent/uploads/**
-            !avent/uploads/.htaccess
