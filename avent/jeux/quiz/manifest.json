@@ -1,0 +1,19 @@
+{
+    "nom": "Quiz",
+    "description": "Réponds à un maximum de questions avant la fin du temps. Une seule bonne réponse par question.",
+    "verification": "serveur",
+    "exemple": {
+        "questions": [
+            {
+                "question": "Quel animal accompagne l'enquêteur du Gîte des Flocons ?",
+                "options": ["Un saint-bernard", "Un husky", "Un chamois", "Un lynx"],
+                "reponse": 1
+            },
+            {
+                "question": "Quelle spécialité fond dans un caquelon ?",
+                "options": ["La raclette", "La fondue", "La tartiflette", "Le gratin"],
+                "reponse": 2
+            }
+        ]
+    }
+}

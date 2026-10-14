@@ -1,0 +1,9 @@
+{
+    "nom": "Chasse aux flocons",
+    "description": "Touche les flocons avant qu'ils ne touchent le sol. Atteins la cible avant la fin du temps !",
+    "verification": "client",
+    "exemple": {
+        "cible": 20,
+        "rythme_ms": 650
+    }
+}

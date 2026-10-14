@@ -12,6 +12,13 @@ if (!isset($_SESSION['csrf_token'])) {
 
 $message = '';
 
+// Retour vers le calendrier de l'avent après connexion (chemins avent/... uniquement)
+if (isset($_GET['redirect']) && is_string($_GET['redirect'])
+    && preg_match('#^avent/[A-Za-z0-9_./-]*(\?[A-Za-z0-9_=&.-]*)?$#', $_GET['redirect'])
+    && strpos($_GET['redirect'], '..') === false) {
+    $_SESSION['redirect_after_login'] = $_GET['redirect'];
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         die('Jeton CSRF invalide. Veuillez recharger la page.');
@@ -46,8 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['login_attempts'] = 0;
             $_SESSION['last_attempt_time'] = time();
 
-            // Redirige vers le dashboard ou l'accueil
-            header('Location: dashboard.php');
+            // Redirige vers le calendrier de l'avent si demandé, sinon vers le dashboard
+            $destination = $_SESSION['redirect_after_login'] ?? 'dashboard.php';
+            unset($_SESSION['redirect_after_login']);
+            header('Location: ' . $destination);
             exit();
         } else {
             $message = "Identifiant ou mot de passe incorrect.";

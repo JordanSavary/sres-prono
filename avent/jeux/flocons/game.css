@@ -1,0 +1,12 @@
+.flocons-score { margin: 0 0 .5rem; font: 700 1.3rem Georgia, serif; color: #7d1520; text-align: center; }
+.flocons-terrain {
+    position: relative; height: min(60vh, 340px); overflow: hidden; border-radius: 12px; touch-action: manipulation;
+    background: linear-gradient(#17365a, #2d5d8f); border: 3px solid #e0b44c; user-select: none;
+}
+.flocons-flocon {
+    position: absolute; top: -48px; width: 52px; height: 52px; padding: 0; line-height: 1; border: 0; border-radius: 50%;
+    font-size: 2rem; color: #fff; background: #ffffff22; cursor: pointer; text-shadow: 0 0 8px #9fd0ff;
+    animation: flocons-chute linear forwards;
+}
+.flocons-flocon.attrape { transform: scale(1.7); opacity: 0; transition: transform .15s, opacity .15s; }
+@keyframes flocons-chute { to { transform: translateY(min(60vh, 340px)) translateY(60px); } }
