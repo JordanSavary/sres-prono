@@ -50,11 +50,14 @@ avent_entete('Jour ' . $numero, 'page-jour', ['assets/jour.js?v=1']);
          data-csrf="<?= h(avent_csrf()) ?>"
          data-duree="<?= $duree ?>">
     <header class="jour-titre">
-        <p class="jour-date">Jour <?= $numero ?> · <?= h(avent_date_fr(avent_date_jour($numero))) ?>
-            <?php if (!empty($jour['est_boss'])) : ?><span class="badge-boss">★ Jour boss</span><?php endif; ?>
-            <?php if ($statut === 'rattrapable') : ?><span class="badge-rattrapage">Rattrapage</span><?php endif; ?>
-        </p>
-        <h1><?= h($jour['titre'] ?: 'Jour ' . $numero) ?></h1>
+        <span class="jour-pastille" aria-hidden="true"><?= $numero ?></span>
+        <div>
+            <p class="jour-date">Jour <?= $numero ?> · <?= h(avent_date_fr(avent_date_jour($numero))) ?>
+                <?php if (!empty($jour['est_boss'])) : ?><span class="badge-boss">★ Jour boss</span><?php endif; ?>
+                <?php if ($statut === 'rattrapable') : ?><span class="badge-rattrapage">Rattrapage</span><?php endif; ?>
+            </p>
+            <h1><?= h($jour['titre'] ?: 'Jour ' . $numero) ?></h1>
+        </div>
     </header>
 
     <?php if ($imageIllustration) : ?>

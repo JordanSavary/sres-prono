@@ -24,13 +24,21 @@ function avent_entete(string $titre, string $classe = '', array $scripts = []): 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= h($titre) ?> – Mystère au Gîte des Flocons</title>
+    <link rel="preload" href="<?= h($base) ?>assets/fonts/bricolage-grotesque-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="icon" type="image/png" href="<?= h($racine) ?>assets/favicon.png">
-    <link rel="stylesheet" href="<?= h($base) ?>assets/avent.css?v=1">
+    <link rel="stylesheet" href="<?= h($base) ?>assets/avent.css?v=2">
 </head>
 <body class="<?= h($classe) ?>">
 <div class="neige" aria-hidden="true"></div>
 <header class="entete">
-    <a class="marque" href="<?= h($base) ?>index.php">🎄 <span>Gîte des Flocons</span></a>
+    <a class="marque" href="<?= h($base) ?>index.php">
+        <svg width="34" height="34" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <path d="M4 18 18 5l14 13" stroke="#FFC857" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 16v14h20V16" stroke="#FFF6E3" stroke-width="3" stroke-linejoin="round"/>
+            <rect x="15" y="21" width="6" height="9" rx="3" fill="#FFC857"/>
+        </svg>
+        <span>Gîte des Flocons</span>
+    </a>
     <nav class="menu" aria-label="Navigation">
         <a href="<?= h($base) ?>index.php" <?= $page === 'index.php' && !$dansAdmin ? 'class="actif"' : '' ?>>Calendrier</a>
         <a href="<?= h($base) ?>classement.php" <?= $page === 'classement.php' ? 'class="actif"' : '' ?>>Classement</a>
@@ -65,7 +73,7 @@ function avent_pied(): void
     ?>
 </main>
 <footer class="pied">Calendrier de l'avent · fait avec amour (et un peu de fondue) pour l'équipe</footer>
-<script src="<?= h($base) ?>assets/avent.js?v=1"></script>
+<script src="<?= h($base) ?>assets/avent.js?v=2"></script>
 <?php foreach ($GLOBALS['avent_scripts'] ?? [] as $script) : ?>
 <script src="<?= h($base . $script) ?>"></script>
 <?php endforeach; ?>
