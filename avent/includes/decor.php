@@ -102,7 +102,14 @@ function avent_decor_toit(): void
     <div class="pan"></div>
     <div class="pan-neige"></div>
     <svg class="etoile-toit" viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z" fill="#FFC857" stroke="#C98F10" stroke-width="1" stroke-linejoin="round"/></svg>
-    <div class="enseigne">Gîte des Flocons</div>
+    <div class="enseigne">
+        <i class="chaine g"></i><i class="chaine d"></i>
+        <div class="panneau">
+            <?= avent_gravure('sapin') ?>
+            <span class="gravure-texte">Gîte des Flocons</span>
+            <?= avent_gravure('flocon') ?>
+        </div>
+    </div>
     <?php for ($s = 0; $s < 2; $s++) : for ($k = 0; $k < 14; $k++) :
         $x = 2 + $k * (46 / 13);
         $couleur = $couleurs[($k + $s * 2) % 4]; ?>
@@ -169,7 +176,11 @@ function avent_decor_porte(): void
     <div class="applique"></div>
     <?= $arche ?>
     <div class="reception">
-        <div class="reception-nom">Réception</div>
+        <div class="potence"><i class="corde g"></i><i class="corde d"></i></div>
+        <div class="panneau panneau-reception">
+            <?= avent_gravure('cloche') ?>
+            <span class="gravure-texte">Réception</span>
+        </div>
         <div class="porte">
             <div class="porte-fente"></div>
             <div class="couronne"><i></i><b class="p1"></b><b class="p2"></b></div>
@@ -202,4 +213,15 @@ function avent_decor_cadeaux(): void
 function avent_decor_balcon(int $indice): string
 {
     return '<span class="balcon b' . ($indice % 4) . '" aria-hidden="true"><i></i></span>';
+}
+
+/** Petits motifs « gravés » dans le bois des panneaux. */
+function avent_gravure(string $motif): string
+{
+    $formes = [
+        'sapin' => '<path d="M12 2 18 10h-3.4l4.4 6.5H13V22h-2v-5.5H5L9.4 10H6z"/>',
+        'flocon' => '<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2v20M3.3 7l17.4 10M3.3 17 20.7 7"/><path d="M9.5 4 12 6.5 14.5 4M9.5 20 12 17.5 14.5 20M4.6 9.2l3.4.9-.9 3.4M19.4 14.8l-3.4-.9.9-3.4M4.6 14.8l3.4-.9-.9-3.4M19.4 9.2l-3.4.9.9 3.4"/></g>',
+        'cloche' => '<path d="M12 2.5a1.6 1.6 0 0 1 1.6 1.6v.6c2.8.7 4.4 3 4.4 6v3.4l2 2.4v1H4v-1l2-2.4V10.7c0-3 1.6-5.3 4.4-6v-.6A1.6 1.6 0 0 1 12 2.5zM9.6 19.2h4.8a2.4 2.4 0 0 1-4.8 0z"/>',
+    ];
+    return '<svg class="gravure" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">' . ($formes[$motif] ?? '') . '</svg>';
 }

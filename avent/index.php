@@ -43,34 +43,26 @@ avent_entete('Calendrier', 'page-calendrier');
 avent_decor_ciel();
 ?>
 <section class="accroche">
-    <p class="etiquette"><span></span>Du 1er au 24 décembre</p>
-    <h1>Mystère au<span>Gîte des Flocons</span></h1>
-    <?php if ($maintenant < avent_debut()) : ?>
-        <p class="resume">Les cadeaux sont encore au chaud : l'enquête commence le <strong><?= h(avent_date_fr(avent_debut())) ?></strong>.</p>
-    <?php else : ?>
-        <p class="resume">Chaque jour, une fenêtre du gîte s'illumine sur un nouvel indice. Réussis le mini-jeu du jour pour faire avancer l'enquête avec Barnabé.</p>
-    <?php endif; ?>
-    <div class="appels">
+    <h1>Mystère au <span>Gîte des Flocons</span></h1>
+    <div class="tableau-bord">
+        <div class="progression-carte">
+            <div class="progression-ligne">
+                <strong><?= $nbOuvertes ?> / <?= AVENT_NB_JOURS ?> volets ouverts</strong>
+                <span>
+                    <?php if ($maintenant < avent_debut()) : ?>
+                        Ouverture le <?= h(avent_date_fr(avent_debut())) ?>
+                    <?php elseif ($rang !== null) : ?>
+                        <?= $rang ?><?= $rang === 1 ? 'er' : 'e' ?> sur <?= $nbJoueurs ?> · <?= $total ?> points
+                    <?php else : ?>
+                        Pas encore de points
+                    <?php endif; ?>
+                </span>
+            </div>
+            <div class="progression-piste"><div style="width:<?= $pct ?>%"></div></div>
+        </div>
         <?php if ($jourACourir !== null) : ?>
             <a class="bouton" href="jour.php?j=<?= $jourACourir ?>">Jouer au jeu du jour</a>
         <?php endif; ?>
-        <a class="bouton bouton-contour" href="classement.php">Voir le classement</a>
-    </div>
-</section>
-
-<section class="progression">
-    <div class="progression-carte">
-        <div class="progression-ligne">
-            <strong><?= $nbOuvertes ?> / <?= AVENT_NB_JOURS ?> volets ouverts</strong>
-            <span>
-                <?php if ($rang !== null) : ?>
-                    <?= $rang ?><?= $rang === 1 ? 'er' : 'e' ?> sur <?= $nbJoueurs ?> · <?= $total ?> points
-                <?php else : ?>
-                    Pas encore de points
-                <?php endif; ?>
-            </span>
-        </div>
-        <div class="progression-piste"><div style="width:<?= $pct ?>%"></div></div>
     </div>
 </section>
 
