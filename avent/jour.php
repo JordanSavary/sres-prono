@@ -42,7 +42,7 @@ if (!$jeu) {
     $raison = '';
 }
 
-avent_entete('Jour ' . $numero, 'page-jour', ['assets/jour.js?v=1']);
+avent_entete('Jour ' . $numero, 'page-jour', ['assets/jour.js?v=2']);
 ?>
 <article class="jour"
          id="jeu-page"

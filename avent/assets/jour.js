@@ -83,7 +83,9 @@
             if (reponse.jeu.style) { chargements.push(chargerRessource('style', reponse.jeu.style)); }
             return Promise.all(chargements).then(function () { return reponse; });
         }).then(function (reponse) {
-            var module = window.AventJeux && window.AventJeux[reponse.jeu.slug];
+            // Un dossier « mon-jeu » s'expose sous « mon_jeu » (les tirets ne sont pas valides dans un identifiant JS).
+            var jeux = window.AventJeux || {};
+            var module = jeux[reponse.jeu.slug] || jeux[reponse.jeu.slug.replace(/-/g, '_')];
             if (!module || typeof module.demarrer !== 'function') {
                 throw new Error('Le jeu est introuvable.');
             }

@@ -1,0 +1,14 @@
+{
+    "nom": "Père Noël Turbo-Hotte",
+    "description": "Jetpack-Joyride version chalet : maintiens pour monter, relâche pour descendre. Ramasse un maximum de cadeaux et tiens 90 secondes en évitant stalactites, guirlandes, corbeaux et boules de neige.",
+    "verification": "serveur",
+    "exemple": {
+        "parametres": {
+            "gravite": 26,
+            "poussee": 34,
+            "vitesse_depart": 150,
+            "vitesse_fin": 270,
+            "densite": 60
+        }
+    }
+}

@@ -71,7 +71,7 @@ avent/
 
 ## Ajouter un jeu (contrat)
 
-Un jeu est un dossier `avent/jeux/<slug>/` (slug en minuscules, chiffres et `_`). Il apparaît automatiquement dans la
+Un jeu est un dossier `avent/jeux/<slug>/` (slug en minuscules, chiffres, `_` et `-`). Il apparaît automatiquement dans la
 liste de l'administration. La plateforme gère tout le reste : comptes, essais, chronomètre, points, classement, révélation.
 
 ### `manifest.json`
@@ -87,13 +87,15 @@ liste de l'administration. La plateforme gère tout le reste : comptes, essais, 
 
 ### `server.php` (facultatif mais recommandé)
 
-Trois fonctions, préfixées `avent_jeu_<slug>_` :
+Trois fonctions, préfixées `avent_jeu_<slug>_` (les `-` du slug deviennent `_` : `pere-noel-turbo` → `avent_jeu_pere_noel_turbo_valider`, et `window.AventJeux.pere_noel_turbo` côté navigateur) :
 
 | Fonction | Rôle |
 | --- | --- |
 | `valider(array $config): ?string` | Vérifie le contenu saisi par l'administrateur. Renvoie `null` si valide, sinon un message d'erreur en français. |
-| `config_publique(array $config): array` | Contenu envoyé au navigateur. **Retirer ici les réponses attendues.** Sans cette fonction, tout le contenu est envoyé. |
-| `verifier(array $config, array $payload, int $dureeMs): array` | Corrige la partie à partir de ce que le jeu renvoie. Renvoie `['score' => 0..100, 'reussite' => bool]`. Sans cette fonction, le score est 0. |
+| `config_publique(array $config, array $contexte = []): array` | Contenu envoyé au navigateur. **Retirer ici les réponses attendues.** Sans cette fonction, tout le contenu est envoyé. |
+| `verifier(array $config, array $payload, int $dureeMs, array $contexte = []): array` | Corrige la partie à partir de ce que le jeu renvoie. Renvoie `['score' => 0..100, 'reussite' => bool]`. Sans cette fonction, le score est 0. |
+
+`$contexte` (facultatif, les anciens jeux peuvent l'ignorer) contient `pseudo`, `jour`, `partie`, `essai`, `test`. Il permet par exemple une graine propre à chaque joueur (`avent_secret()` fournit un secret serveur, créé automatiquement).
 
 Règle d'or : **tout ce qui peut être vérifié côté serveur doit l'être** (réponses d'un quiz, mot du pendu…). Pour un jeu
 d'adresse ou de réflexe qui ne peut pas être rejoué par le serveur, `verifier` doit au moins plafonner le score à ce qui
@@ -132,4 +134,5 @@ window.AventJeux.<slug> = {
 ## Jeux fournis
 
 * `quiz` — questions à choix multiple, corrigées côté serveur.
+* `pere-noel-turbo` — runner à la Jetpack Joyride, simulation à pas fixe rejouée côté serveur (voir son `README.md` pour les paramètres).
 * `flocons` — jeu de réflexe : attraper des flocons avant qu'ils ne tombent (score plafonné côté serveur).

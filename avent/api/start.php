@@ -111,5 +111,11 @@ avent_json([
         'script' => 'jeux/' . $slug . '/game.js',
         'style'  => is_file(dirname(__DIR__) . '/jeux/' . $slug . '/game.css') ? 'jeux/' . $slug . '/game.css' : null,
     ],
-    'config' => avent_config_publique($slug, $config),
+    'config' => avent_config_publique($slug, $config, [
+        'pseudo' => $pseudo,
+        'jour'   => $numero,
+        'partie' => (int) $partie['id'],
+        'essai'  => $partie['essai'] !== null ? (int) $partie['essai'] : null,
+        'test'   => (bool) $test,
+    ]),
 ]);
