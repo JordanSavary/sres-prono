@@ -557,3 +557,10 @@ a { color: var(--or); }
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .neige, .traineau { display: none; }
 }
+
+/* Mobile : l'arène de jeu occupe toute la largeur de l'écran */
+@media (max-width: 640px) {
+    .page-jour .arene { margin-inline: -16px; border-radius: 0; padding: .7rem 4px .9rem; }
+    .page-jour .arene .chrono { padding-inline: 12px; }
+    .page-jour .arene .pnt { border-radius: 8px; }
+}
