@@ -55,7 +55,13 @@ try {
     if (!$horsDelai) {
         $verifier = avent_jeu_fonction($slug, 'verifier');
         if ($verifier) {
-            $resultat = $verifier($config, $payload, $ecouleMs);
+            $resultat = $verifier($config, $payload, $ecouleMs, [
+                'pseudo' => $pseudo,
+                'jour'   => $numero,
+                'partie' => $partieId,
+                'essai'  => $partie['essai'] !== null ? (int) $partie['essai'] : null,
+                'test'   => (int) $partie['test'] === 1,
+            ]);
             $score    = max(0, min(100, (int) round((float) ($resultat['score'] ?? 0))));
             $reussite = !empty($resultat['reussite']);
         }

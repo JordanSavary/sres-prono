@@ -447,7 +447,7 @@ function avent_formater_duree(int $millisecondes): string
 
 function avent_slug_valide(string $slug): bool
 {
-    return (bool) preg_match('/^[a-z0-9_]{1,50}$/', $slug);
+    return (bool) preg_match('/^[a-z0-9][a-z0-9_-]{0,49}$/', $slug);
 }
 
 function avent_liste_jeux(): array
@@ -485,7 +485,8 @@ function avent_jeu_fonction(string $slug, string $nom): ?string
         return null;
     }
     require_once $fichier;
-    $fonction = 'avent_jeu_' . $slug . '_' . $nom;
+    // Les tirets du dossier deviennent des « _ » dans les noms de fonctions (pere-noel-turbo → pere_noel_turbo).
+    $fonction = 'avent_jeu_' . str_replace('-', '_', $slug) . '_' . $nom;
     return function_exists($fonction) ? $fonction : null;
 }
 
@@ -496,10 +497,27 @@ function avent_config_decodee(?string $json): array
 }
 
 /** Configuration envoyée au navigateur : le module retire les réponses attendues. */
-function avent_config_publique(string $slug, array $config): array
+/**
+ * $contexte (facultatif pour les jeux) : ['pseudo', 'jour', 'partie', 'essai', 'test'].
+ * Il permet à un jeu de dériver un contenu propre à chaque joueur (graine) ; les modules qui
+ * n'en ont pas besoin ignorent simplement ce second argument.
+ */
+function avent_config_publique(string $slug, array $config, array $contexte = []): array
 {
     $fonction = avent_jeu_fonction($slug, 'config_publique');
-    return $fonction ? $fonction($config) : $config;
+    return $fonction ? $fonction($config, $contexte) : $config;
+}
+
+/** Secret du serveur (créé au premier usage, jamais envoyé au navigateur) : sert à dériver des graines. */
+function avent_secret(): string
+{
+    $secret = avent_reglage('secret', '');
+    if (strlen($secret) < 32) {
+        $secret = bin2hex(random_bytes(24));
+        avent_pdo()->prepare('INSERT IGNORE INTO avent_reglages (cle, valeur) VALUES (\'secret\', ?)')->execute([$secret]);
+        $secret = avent_reglages(true)['secret'] ?? $secret;
+    }
+    return $secret;
 }
 
 // ---------------------------------------------------------------------------
