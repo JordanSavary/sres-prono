@@ -54,8 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['login_attempts'] = 0;
             $_SESSION['last_attempt_time'] = time();
 
-            // Redirige vers le calendrier de l'avent si demandé, sinon vers le dashboard
-            $destination = $_SESSION['redirect_after_login'] ?? 'dashboard.php';
+            // Redirige vers la page demandée (calendrier de l'avent), sinon vers l'accueil du calendrier de l'avent
+            $destination = $_SESSION['redirect_after_login'] ?? 'avent/index.php';
             unset($_SESSION['redirect_after_login']);
             header('Location: ' . $destination);
             exit();
