@@ -1,0 +1,17 @@
+{
+    "nom": "Cap sur Robinson island",
+    "description": "Huit lutins rament, la barque rétrécit, les lutins démissionnent un à un. Tapote (ou Espace) en rythme pour atteindre l'île avant que tout coule : plus tu arrives vite, plus tu marques.",
+    "verification": "serveur",
+    "essais_max": 1,
+    "exemple": {
+        "parametres": {
+            "distance": 420000,
+            "impulsion": 120,
+            "frottement": 40,
+            "courant": 1,
+            "taille_fin": 450,
+            "temps_plein": 25,
+            "points_min": 10
+        }
+    }
+}
