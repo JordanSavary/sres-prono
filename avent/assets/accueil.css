@@ -1,0 +1,90 @@
+/* Page de connexion : hall d'accueil du Gîte des Flocons (aucune ressource externe). */
+@font-face { font-family: 'Bricolage Grotesque'; font-weight: 800; font-style: normal; font-display: swap; src: url('fonts/bricolage-grotesque-latin-800-normal.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-weight: 400; font-style: normal; font-display: swap; src: url('fonts/dm-sans-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-weight: 500; font-style: normal; font-display: swap; src: url('fonts/dm-sans-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-weight: 700; font-style: normal; font-display: swap; src: url('fonts/dm-sans-latin-700-normal.woff2') format('woff2'); }
+
+:root {
+    --nuit: #0b1437; --creme: #fff6e3; --or: #ffc857; --or-fonce: #c98f10;
+    --rouge: #d93a3f; --bois: #a8693e; --bois-sombre: #5a3420; --encre: #1a1a4a;
+    --titre: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif;
+    --texte: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { background: #2a160b; -webkit-text-size-adjust: 100%; }
+body.accueil { margin: 0; min-height: 100vh; min-height: 100svh; font-family: var(--texte); color: var(--creme); overflow-x: hidden; position: relative; }
+
+/* --- Décor fixe : mur lambrissé, poutre, plancher, lumière --- */
+.acc-mur { position: fixed; inset: 0; z-index: 0; background:
+    radial-gradient(ellipse 70% 55% at 50% 38%, rgba(255, 190, 110, .30), transparent 70%),
+    radial-gradient(ellipse 120% 100% at 50% 40%, transparent 45%, rgba(8, 3, 1, .78) 100%),
+    repeating-linear-gradient(90deg, #4a2a16 0 74px, #3a1f0f 74px 77px, #4f2e19 77px 80px); }
+.acc-poutre { position: fixed; left: 0; right: 0; top: 0; height: 34px; z-index: 1; background: linear-gradient(#2b150a, #3d2112 60%, #25120a); box-shadow: 0 6px 14px rgba(0, 0, 0, .55); }
+.acc-sol { position: fixed; left: 0; right: 0; bottom: 0; height: 21svh; min-height: 120px; z-index: 1;
+    background: linear-gradient(rgba(0, 0, 0, .35), rgba(0, 0, 0, 0) 55%), repeating-linear-gradient(90deg, #6b3f22 0 110px, #4f2c17 110px 113px, #75462a 113px 220px, #4f2c17 220px 223px);
+    border-top: 10px solid #2d160a; box-shadow: 0 -2px 0 #8a5a37 inset; }
+.acc-lueur-feu { position: fixed; left: -20vw; bottom: -20svh; width: 90vw; height: 80svh; z-index: 1; pointer-events: none; background: radial-gradient(circle at 40% 65%, rgba(255, 140, 40, .55), rgba(255, 110, 20, .18) 45%, transparent 70%); animation: acc-pulse 3.2s ease-in-out infinite; }
+@keyframes acc-pulse { 0%, 100% { opacity: .85; } 50% { opacity: 1; } 30% { opacity: .7; } }
+
+/* Guirlande lumineuse sur la poutre */
+.acc-guirlande { position: fixed; left: 0; right: 0; top: 30px; height: 44px; z-index: 2; pointer-events: none; }
+.acc-guirlande svg { position: absolute; inset: 0; width: 100%; height: 40px; }
+.acc-guirlande i { position: absolute; width: 9px; height: 12px; margin-left: -4.5px; border-radius: 50% 50% 55% 55%; background: var(--c); box-shadow: 0 0 10px 2px var(--c); animation: acc-scint 2.4s ease-in-out infinite; animation-delay: var(--r); }
+@keyframes acc-scint { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+.acc-ampoule { animation: acc-scint 2.4s ease-in-out infinite; animation-delay: var(--r, 0s); }
+
+/* --- Scène --- */
+.acc-scene { position: relative; z-index: 3; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; padding: 52px 16px 20px; --rw: min(430px, 100%); }
+.acc-reception { display: block; width: var(--rw); height: auto; filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .45)); }
+
+/* Cheminée + canapé */
+.acc-coin { display: flex; align-items: flex-end; justify-content: center; width: min(470px, 100%); margin-top: 14px; position: relative; }
+.acc-cheminee { width: 38%; height: auto; flex: none; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .5)); }
+.acc-canape { width: 66%; height: auto; flex: none; margin-left: -6%; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .5)); }
+.acc-fenetre, .acc-sapin { display: none; }
+.acc-flammes path { transform-box: fill-box; transform-origin: 50% 100%; animation: acc-flamme 1.1s ease-in-out infinite alternate; }
+.acc-flammes .f2 { animation-duration: .8s; animation-delay: -.3s; }
+.acc-flammes .f3 { animation-duration: .6s; animation-delay: -.5s; }
+@keyframes acc-flamme { 0% { transform: scale(1, .92) skewX(-3deg); } 100% { transform: scale(.94, 1.07) skewX(3deg); } }
+.acc-mini-flamme { transform-box: fill-box; transform-origin: 50% 100%; animation: acc-flamme .7s ease-in-out infinite alternate; }
+.acc-zzz { opacity: 0; animation: acc-zzz 4s ease-in-out infinite; }
+.acc-zzz.z2 { animation-delay: 1.2s; }
+@keyframes acc-zzz { 0% { opacity: 0; transform: translateY(6px); } 40% { opacity: .9; } 100% { opacity: 0; transform: translateY(-6px); } }
+.acc-flocon { animation: acc-neige linear infinite; }
+@keyframes acc-neige { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: .9; } 100% { transform: translateY(190px); opacity: 0; } }
+
+/* --- Carte de connexion : le registre posé sur le comptoir --- */
+.acc-carte { position: relative; z-index: 4; width: min(380px, 100%); margin-top: calc(var(--rw) * -0.17); padding: 2.1rem 1.5rem 1.4rem; border-radius: 20px; color: var(--encre);
+    background: linear-gradient(#fff9ea, var(--creme)); border: 3px solid #e3c98f;
+    box-shadow: 0 0 0 3px #3d2112, 0 18px 40px rgba(0, 0, 0, .55), 0 4px 0 3px #2d160a; }
+.acc-plaque { position: absolute; left: 50%; top: -16px; transform: translateX(-50%); padding: .32rem 1.15rem; border-radius: 8px; white-space: nowrap;
+    background: linear-gradient(135deg, #ffe29a, #e0a93a 55%, #b57d1e); border: 2px solid #7a5214; color: #3b1d0a;
+    font: 800 .78rem/1 var(--titre); letter-spacing: .16em; text-transform: uppercase; box-shadow: 0 3px 0 #7a5214; }
+.acc-carte h1 { margin: .15rem 0 .2rem; font: 800 1.9rem/1.1 var(--titre); text-align: center; letter-spacing: -.01em; }
+.acc-sous { margin: 0 0 1.1rem; text-align: center; font-size: .92rem; color: #6b5a4a; }
+.acc-erreur { margin: 0 0 .9rem; padding: .6rem .8rem; border-radius: 10px; font-size: .9rem; font-weight: 500; color: #8f1f27; background: #fde4e1; border: 1.5px solid var(--rouge); }
+.acc-champ { display: block; margin-bottom: .8rem; }
+.acc-champ span { display: block; margin-bottom: .25rem; font-size: .82rem; font-weight: 700; color: #5a3420; }
+.acc-champ input { display: block; width: 100%; height: 46px; padding: 0 .9rem; font: 500 16px var(--texte); color: var(--encre); background: #fffdf6; border: 2px solid #e3d3b5; border-radius: 12px; outline: none; transition: border-color .15s, box-shadow .15s; }
+.acc-champ input:focus { border-color: var(--or-fonce); box-shadow: 0 0 0 4px rgba(255, 200, 87, .45); }
+.acc-bouton { display: flex; align-items: center; justify-content: center; gap: .55rem; width: 100%; min-height: 50px; margin-top: .4rem; padding: .7rem 1rem; cursor: pointer; font: 800 1.05rem var(--titre); color: #3b1d0a;
+    background: linear-gradient(#ffd774, var(--or)); border: 0; border-radius: 14px; box-shadow: 0 4px 0 var(--or-fonce), 0 8px 16px rgba(0, 0, 0, .25); transition: transform .08s, box-shadow .08s; touch-action: manipulation; }
+.acc-bouton:hover { filter: brightness(1.04); }
+.acc-bouton:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--or-fonce); }
+.acc-liens { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; font-size: .88rem; }
+.acc-liens a { color: #9c3f4a; font-weight: 700; text-underline-offset: 3px; }
+.acc-liens a:hover { color: var(--rouge); }
+
+/* --- Grands écrans : le coin salon à gauche, la fenêtre et le sapin à droite --- */
+@media (min-width: 1000px) {
+    .acc-scene { --rw: min(520px, 60svh, 100%); justify-content: center; padding-top: 60px; padding-bottom: 32px; }
+    .acc-coin { position: absolute; left: clamp(8px, 2vw, 40px); bottom: 0; width: min(560px, 36vw); margin-top: 0; }
+    .acc-fenetre { display: block; position: absolute; right: clamp(24px, 6vw, 110px); top: 14svh; width: min(220px, 15vw); height: auto; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .5)); }
+    .acc-sapin { display: block; position: absolute; right: clamp(8px, 2vw, 40px); bottom: 0; width: min(190px, 13vw); height: auto; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .5)); }
+}
+@media (max-width: 400px) {
+    .acc-carte { padding: 1.9rem 1.15rem 1.2rem; }
+    .acc-carte h1 { font-size: 1.65rem; }
+    .acc-guirlande i { width: 7px; height: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .acc-lueur-feu, .acc-guirlande i, .acc-ampoule, .acc-flammes path, .acc-mini-flamme, .acc-zzz, .acc-flocon { animation: none; } .acc-zzz { opacity: .8; } }
