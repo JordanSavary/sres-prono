@@ -1,0 +1,31 @@
+/* Cap sur Robinson island */
+.bq { position: relative; width: 100%; max-width: 520px; margin: 0 auto; border-radius: 14px; overflow: hidden; background: #143a58; box-shadow: 0 6px 18px rgba(0,0,0,.25); touch-action: manipulation; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.bq-zone { position: relative; width: 100%; aspect-ratio: 360 / 380; touch-action: manipulation; -webkit-tap-highlight-color: transparent; cursor: pointer; }
+.bq-svg { display: block; width: 100%; height: 100%; }
+.bq-piste { position: absolute; z-index: 2; top: 8px; left: 10px; right: 10px; display: flex; align-items: center; gap: 6px; pointer-events: none; opacity: .85; }
+.bq-piste-barre { flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,.35); overflow: hidden; }
+.bq-piste-rempli { display: block; height: 100%; width: 0; border-radius: 3px; background: #ffd45e; }
+.bq-piste-ile { font-size: 1rem; line-height: 1; }
+.bq-info { position: absolute; z-index: 2; top: 24px; left: 10px; pointer-events: none; font-size: .8rem; font-weight: 700; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.6); }
+.bq-bulles { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+.bq-bulle { position: absolute; transform: translate(-50%, -100%); max-width: 62%; padding: .3rem .55rem; border-radius: 12px; background: #fffaf0; color: #2a1a10; font-size: .78rem; font-weight: 600; line-height: 1.2; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,.3); animation: bq-bulle 2.2s ease-out forwards; }
+.bq-bulle::after { content: ''; position: absolute; left: 50%; bottom: -5px; width: 10px; height: 10px; background: inherit; transform: translateX(-50%) rotate(45deg); }
+@keyframes bq-bulle { 0% { opacity: 0; margin-top: 8px; } 12% { opacity: 1; margin-top: 0; } 80% { opacity: 1; } 100% { opacity: 0; margin-top: -10px; } }
+.bq-ramer { display: block; width: 100%; min-height: 76px; border: 0; border-top: 3px solid #5c3a1b; background: linear-gradient(#e4a24a, #c07a22); color: #3b2108; font: inherit; font-size: 1.7rem; font-weight: 900; letter-spacing: .08em; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; box-shadow: inset 0 3px 0 rgba(255,255,255,.35); transition: transform .06s; }
+.bq-ramer:disabled { opacity: .6; cursor: default; }
+.bq-ramer.bq-presse, .bq-ramer:active:not(:disabled) { transform: translateY(2px); background: linear-gradient(#c07a22, #e4a24a); }
+.bq-ecran { position: absolute; inset: 0; z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6rem; padding: 1rem; text-align: center; color: #fff; background: rgba(14, 30, 50, .85); }
+.bq-ecran[hidden] { display: none; }
+.bq-ecran h3 { margin: 0; font-size: 1.35rem; line-height: 1.1; }
+.bq-slogan { margin: 0; font-style: italic; font-size: .95rem; opacity: .95; }
+.bq-regles { margin: 0; font-size: .82rem; line-height: 1.35; max-width: 30em; }
+.bq-bilan { margin: 0; font-size: 1.1rem; font-weight: 700; }
+.bq-go { margin-top: .25rem; min-height: 44px; padding-inline: 1.6rem; touch-action: manipulation; }
+@media (max-width: 400px) {
+    .bq-ecran { padding: .6rem; gap: .4rem; }
+    .bq-ecran h3 { font-size: 1.1rem; }
+    .bq-slogan { font-size: .82rem; }
+    .bq-regles { font-size: .72rem; }
+    .bq-ramer { min-height: 68px; font-size: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) { .bq-bulle { animation-duration: 3s; } }

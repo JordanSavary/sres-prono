@@ -149,4 +149,5 @@ window.AventJeux.<slug> = {
 * `quiz` — questions à choix multiple, corrigées côté serveur.
 * `pere-noel-turbo` — runner à la Jetpack Joyride, simulation à pas fixe rejouée côté serveur (voir son `README.md` pour les paramètres).
 * `lutins` — puzzle type Queens à solution unique, chaque pose vérifiée par le serveur (voir son `README.md`).
+* `barque` — jeu de rythme « Cap sur Robinson island » : journal des impulsions rejoué côté serveur, sans appel pendant la partie (voir son `README.md`).
 * `flocons` — jeu de réflexe : attraper des flocons avant qu'ils ne tombent (score plafonné côté serveur).
