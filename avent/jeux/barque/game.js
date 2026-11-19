@@ -129,11 +129,13 @@
         s += '<g id="bq-vagues" fill="none" stroke="#dff1fa" stroke-linecap="round"></g>';
         // île (base en 0,0 ; échelle et position pilotées par la distance restante)
         s += '<g id="bq-ile"><ellipse cx="0" cy="2" rx="86" ry="9" fill="#0e3550" opacity=".35"/>' +
-            '<path d="M-80 0 Q-60 -22 -20 -28 Q20 -34 52 -24 Q80 -14 82 0 Z" fill="#e8d3a1"/>' +
-            '<path d="M-52 -14 Q-30 -26 -6 -28 Q22 -32 44 -22 Q22 -20 -6 -17 Q-30 -13 -52 -14 Z" fill="#fff" opacity=".9"/>' +
-            '<path d="M-32 -22 Q-36 -48 -26 -70" fill="none" stroke="#7a5230" stroke-width="5" stroke-linecap="round"/>' +
-            '<g fill="none" stroke="#2f8f4e" stroke-width="5" stroke-linecap="round"><path d="M-26 -70 q-18 -4 -30 6"/><path d="M-26 -70 q-12 -14 -28 -12"/><path d="M-26 -70 q4 -16 20 -18"/><path d="M-26 -70 q16 -6 28 6"/></g>' +
-            '<circle cx="-24" cy="-67" r="3" fill="#c0343e"/><circle cx="-31" cy="-66" r="3" fill="#f7d455"/>' +
+            '<path d="M-82 2 Q-70 -6 -52 -4 L-20 -8 L20 -8 L56 -4 Q76 -6 84 2 Z" fill="#9fc4dc"/>' +
+            '<path d="M-80 0 Q-60 -22 -20 -28 Q20 -34 52 -24 Q80 -14 82 0 Z" fill="#f4f8ff"/>' +
+            '<path d="M-60 -8 Q-30 -20 0 -20 Q30 -22 60 -10 Q30 -12 0 -12 Q-30 -12 -60 -8 Z" fill="#cfe3f3"/>' +
+            '<rect x="-30" y="-36" width="5" height="12" fill="#6b4423"/>' +
+            '<polygon points="-27.5,-86 -44,-60 -35,-60 -48,-42 -38,-42 -52,-24 -3,-24 -17,-42 -7,-42 -20,-60 -11,-60" fill="#1f5a3e"/>' +
+            '<path d="M-27.5 -86 L-36 -72 Q-27 -69 -19 -72 Z M-42 -56 Q-33 -52 -23 -56 L-27 -50 Q-33 -47 -39 -50 Z M-48 -38 Q-33 -33 -8 -38 L-12 -31 Q-30 -27 -45 -31 Z" fill="#f4f8ff"/>' +
+            '<circle cx="-27.5" cy="-87" r="3.2" fill="#ffd45e"/><circle cx="-35" cy="-52" r="2.4" fill="#d1303b"/><circle cx="-20" cy="-47" r="2.4" fill="#f7d455"/><circle cx="-31" cy="-36" r="2.4" fill="#4a8fd8"/>' +
             '<line x1="34" y1="-18" x2="34" y2="-72" stroke="#6b4423" stroke-width="4"/>' +
             '<rect x="-4" y="-80" width="92" height="22" rx="4" fill="#a9733b" stroke="#5c3a1b" stroke-width="2"/>' +
             '<text x="42" y="-65" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff4dc" font-family="Georgia,\'Times New Roman\',serif">Robinson island</text></g>';
@@ -160,7 +162,7 @@
         var racine = document.createElement('div');
         racine.className = 'bq';
         racine.innerHTML =
-            '<div class="bq-piste" aria-hidden="true"><span class="bq-piste-barre"><i class="bq-piste-rempli"></i></span><span class="bq-piste-ile">🏝</span></div>' +
+            '<div class="bq-piste" aria-hidden="true"><span class="bq-piste-barre"><i class="bq-piste-rempli"></i></span><span class="bq-piste-ile">🎄</span></div>' +
             '<div class="bq-info" aria-live="off"><span class="bq-lutins">🧝 8</span></div>' +
             '<div class="bq-zone">' + scene() + '<div class="bq-bulles"></div></div>' +
             '<button type="button" class="bq-ramer" disabled>RAMER !</button>' +
@@ -259,7 +261,7 @@
         /* --- Fin de partie --- */
         var PHRASES_ARRIVEE = [
             [25, 'Traversée de record. Robinson te propose déjà la mairie.'],
-            [38, 'Belle traversée. L\'île t\'accueille avec une noix de coco tiède.'],
+            [38, 'Belle traversée. L\'île t\'accueille avec un vin chaud tiède.'],
             [60, 'Arrivé de justesse. L\'île a failli partir sans toi.']
         ];
         function terminerPartie() {
