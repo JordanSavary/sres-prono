@@ -131,7 +131,7 @@
 
         var e = etat = {
             actif: true, racine: racine, ecouteurs: [], n: n, zones: null, grille: [], vies: viesMax,
-            posees: 0, debut: 0, base: 0, minuteur: 0, pause: 0, fini: false, file: Promise.resolve(),
+            posees: 0, neuf: -1, debut: 0, base: 0, minuteur: 0, pause: 0, fini: false, file: Promise.resolve(),
             dernierAppui: { k: -1, t: 0 }
         };
         var elVies = racine.querySelector('.lut-vies');
@@ -188,11 +188,12 @@
                     else if (k === 4) { s += croix(r, c, true); }
                     else if (k === 2 || k === 3) {
                         s += '<use href="#lut-elfe" x="' + (c * CELLULE + 1) + '" y="' + (r * CELLULE + 1) + '" width="38" height="38"' +
-                            (k === 2 ? ' class="lut-attente"' : ' class="lut-pose"') + '/>';
+                            (k === 2 ? ' class="lut-attente"' : (e.neuf === r * n + c ? ' class="lut-pose"' : '')) + '/>';
                     }
                 }
             }
             calque.innerHTML = s;
+            e.neuf = -1; // l'animation de pose ne joue qu'une fois, pas à chaque redessin
             elNb.textContent = e.posees;
         }
 
@@ -265,6 +266,7 @@
                 if (!rep || !rep.ok) { throw new Error((rep && rep.erreur) || 'Réponse inattendue.'); }
                 if (rep.bon) {
                     e.grille[r][c] = 3;
+                    e.neuf = r * n + c;
                     e.posees++;
                     dire(BONS[Math.floor(Math.random() * BONS.length)], 'lut-bon');
                 } else {
