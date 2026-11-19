@@ -5,6 +5,7 @@ if (!isset($_SESSION['login_attempts'])) {
     $_SESSION['last_attempt_time'] = time();
 }
 include 'includes/db.php';
+require_once __DIR__ . '/avent/includes/decor_accueil.php';
 
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -71,33 +72,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="fr">
-<?php include 'head.php'; ?>
-<body>
-    <section class="container">
-        <div class="login-container">
-            <div class="circle circle-one"></div>
-            <div class="form-container">
-                <img src="./styles/trophy.png" alt="illustration" class="illustration" />
-                <h1 class="">Connexion</h1>
-                <?php if ($message): ?>
-                    <p style="color: red;"><?= htmlspecialchars($message) ?></p>
-                <?php endif; ?>
-                <form method="post" action="" class="login-form">
-                    <input type="pseudo" name="pseudo" id="pseudo" placeholder="Identifiant ou Email" />
-                    <input type="password" name="password" id="password" placeholder="Mot de passe" />
-                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-                    <button class="btn-enregistrer" type="submit">Se connecter</button>
-                </form>
-                <div class="register-forget opacity">
-                    <a href="register.php">S'inscrire</a>
-                    <a href="reset_password.php">Mot de passe oublié</a>
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion – Gîte des Flocons</title>
+    <link rel="preload" href="avent/assets/fonts/bricolage-grotesque-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="assets/favicon.png">
+    <link rel="stylesheet" href="avent/assets/accueil.css?v=1">
+</head>
+<body class="accueil">
+    <?php accueil_hall(); ?>
+    <div class="acc-ombre" aria-hidden="true"></div>
+    <div class="acc-poutre" aria-hidden="true"></div>
+    <?php accueil_guirlande(); ?>
+
+    <main class="acc-scene">
+        <section class="acc-carte" aria-labelledby="titre-connexion">
+            <span class="acc-plaque">Registre de l'hôtel</span>
+            <h1 id="titre-connexion">Connexion</h1>
+            <p class="acc-sous">Signe le registre pour récupérer ta clé.</p>
+            <?php if ($message) : ?>
+                <p class="acc-erreur" role="alert"><?= htmlspecialchars($message) ?></p>
+            <?php endif; ?>
+            <form method="post" action="">
+                <label class="acc-champ">
+                    <span>Identifiant ou email</span>
+                    <input type="text" name="pseudo" id="pseudo" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required>
+                </label>
+                <label class="acc-champ">
+                    <span>Mot de passe</span>
+                    <input type="password" name="password" id="password" autocomplete="current-password" required>
+                </label>
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
+                <button class="acc-bouton" type="submit">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="7.5" cy="12" r="4.5" stroke="#3b1d0a" stroke-width="2.4"/><path d="M12 12h9M18 12v4M21 12v3" stroke="#3b1d0a" stroke-width="2.4" stroke-linecap="round"/></svg>
+                    Se connecter
+                </button>
+            </form>
+            <div class="acc-liens">
+                <a href="register.php">S'inscrire</a>
+                <a href="reset_password.php">Mot de passe oublié</a>
             </div>
-            <div class="circle circle-two"></div>
-        </div>
+        </section>
 
-    </section>
-
+    </main>
 </body>
-<?php include 'script.php'; ?>
 </html>
