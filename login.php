@@ -82,15 +82,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="avent/assets/accueil.css?v=1">
 </head>
 <body class="accueil">
-    <div class="acc-mur" aria-hidden="true"></div>
+    <?php accueil_hall(); ?>
+    <div class="acc-ombre" aria-hidden="true"></div>
     <div class="acc-poutre" aria-hidden="true"></div>
     <?php accueil_guirlande(); ?>
-    <div class="acc-sol" aria-hidden="true"></div>
-    <div class="acc-lueur-feu" aria-hidden="true"></div>
 
     <main class="acc-scene">
-        <?php accueil_reception(); ?>
-
         <section class="acc-carte" aria-labelledby="titre-connexion">
             <span class="acc-plaque">Registre de l'hôtel</span>
             <h1 id="titre-connexion">Connexion</h1>
@@ -119,10 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </section>
 
-        <div class="acc-coin" aria-hidden="true">
-            <?php accueil_cheminee(); accueil_canape(); ?>
-        </div>
-        <?php accueil_fenetre(); accueil_sapin(); ?>
     </main>
 </body>
 </html>
