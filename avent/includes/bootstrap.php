@@ -157,9 +157,15 @@ function avent_reglage(string $cle, string $defaut = ''): string
     return avent_reglages()[$cle] ?? $defaut;
 }
 
-function avent_essais_max(): int
+/** Essais par case : réglage global, éventuellement réduit par le jeu (clé « essais_max » du manifest). */
+function avent_essais_max(?string $slug = null): int
 {
-    return max(1, (int) avent_reglage('essais_max', '2'));
+    $max = max(1, (int) avent_reglage('essais_max', '2'));
+    $jeu = $slug ? avent_jeu($slug) : null;
+    if ($jeu && isset($jeu['essais_max']) && (int) $jeu['essais_max'] >= 1) {
+        $max = min($max, (int) $jeu['essais_max']);
+    }
+    return $max;
 }
 
 function avent_coef_boss(): float
@@ -359,6 +365,17 @@ function avent_meilleures_parties(string $pseudo): array
 }
 
 /** Nombre d'essais consommés par jour (une partie lancée compte, même abandonnée). */
+/** Jours pour lesquels le joueur a une partie encore reprenable (essai consommé, temps pas écoulé). */
+function avent_parties_en_cours(string $pseudo): array
+{
+    $limite = (new DateTimeImmutable('now'))->modify('-' . (AVENT_DUREE_MAX * 1000 + AVENT_GRACE_MS) . ' milliseconds');
+    $requete = avent_pdo()->prepare(
+        'SELECT DISTINCT jour FROM avent_parties WHERE pseudo = ? AND test = 0 AND statut = \'en_cours\' AND debut >= ?'
+    );
+    $requete->execute([$pseudo, $limite->format('Y-m-d H:i:s.v')]);
+    return array_fill_keys(array_map('intval', $requete->fetchAll(PDO::FETCH_COLUMN)), true);
+}
+
 function avent_essais_utilises(string $pseudo): array
 {
     $requete = avent_pdo()->prepare(
@@ -452,6 +469,10 @@ function avent_slug_valide(string $slug): bool
 
 function avent_liste_jeux(): array
 {
+    static $cache = null;
+    if ($cache !== null) {
+        return $cache;
+    }
     $jeux = [];
     foreach (glob(dirname(__DIR__) . '/jeux/*', GLOB_ONLYDIR) ?: [] as $dossier) {
         $slug = basename($dossier);
@@ -466,7 +487,7 @@ function avent_liste_jeux(): array
         }
     }
     ksort($jeux);
-    return $jeux;
+    return $cache = $jeux;
 }
 
 function avent_jeu(string $slug): ?array
@@ -569,4 +590,43 @@ function avent_url_image(?string $chemin): ?string
 {
     $valide = avent_image_valide($chemin);
     return $valide ? avent_base() . $valide : null;
+}
+
+
+// ---------------------------------------------------------------------------
+// État de partie côté serveur (jeux qui dialoguent avec le serveur pendant la partie)
+// ---------------------------------------------------------------------------
+
+/** Crée la table des états au premier usage (aucune migration à lancer). À appeler hors transaction. */
+function avent_etat_table(): void
+{
+    static $faite = false;
+    if ($faite) {
+        return;
+    }
+    avent_pdo()->exec(
+        'CREATE TABLE IF NOT EXISTS avent_etats (
+           partie_id INT UNSIGNED NOT NULL,
+           etat      MEDIUMTEXT   NOT NULL,
+           maj       DATETIME(3)  NOT NULL,
+           PRIMARY KEY (partie_id)
+         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4'
+    );
+    $faite = true;
+}
+
+/** État enregistré pour une partie (tableau vide s'il n'y en a pas). */
+function avent_etat_lire(int $partieId, bool $verrou = false): array
+{
+    avent_etat_table();
+    $requete = avent_pdo()->prepare('SELECT etat FROM avent_etats WHERE partie_id = ?' . ($verrou ? ' FOR UPDATE' : ''));
+    $requete->execute([$partieId]);
+    $etat = json_decode((string) $requete->fetchColumn(), true);
+    return is_array($etat) ? $etat : [];
+}
+
+function avent_etat_ecrire(int $partieId, array $etat): void
+{
+    avent_pdo()->prepare('REPLACE INTO avent_etats (partie_id, etat, maj) VALUES (?, ?, ?)')
+        ->execute([$partieId, json_encode($etat), avent_maintenant_precis()]);
 }

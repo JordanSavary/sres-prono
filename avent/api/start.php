@@ -71,7 +71,7 @@ if (!$partie) {
         );
         $compte->execute([$pseudo, $numero]);
         $utilises = (int) $compte->fetchColumn();
-        if ($utilises >= avent_essais_max()) {
+        if ($utilises >= avent_essais_max($slug)) {
             avent_json(['ok' => false, 'erreur' => "Tu as utilisé tous tes essais pour cette case."], 403);
         }
         $essai = $utilises + 1;

@@ -22,12 +22,13 @@ if ($statut === 'verrouille' && !$meilleur) {
 
 $jeu       = $jour['jeu'] ? avent_jeu($jour['jeu']) : null;
 $utilises  = avent_essais_utilises($pseudo)[$numero] ?? 0;
-$essaisMax = avent_essais_max();
+$essaisMax = avent_essais_max($jour['jeu'] ?: null);
 $reste     = max(0, $essaisMax - $utilises);
 $duree     = min(AVENT_DUREE_MAX, max(10, (int) $jour['duree_max']));
 $coef      = !empty($jour['est_boss']) ? avent_coef_boss() : 1.0;
 $ouvert    = in_array($statut, ['disponible', 'rattrapable'], true);
-$peutJouer = $jeu && $ouvert && ($test || $reste > 0);
+$reprise   = !$test && isset(avent_parties_en_cours($pseudo)[$numero]); // partie commencée : on peut la reprendre même sans essai restant
+$peutJouer = $jeu && $ouvert && ($test || $reste > 0 || $reprise);
 $imageIllustration = avent_url_image($jour['illustration']);
 $imageRevelation   = avent_url_image($jour['revelation_image']);
 $revelationVisible = $meilleur || $test;
@@ -36,13 +37,13 @@ if (!$jeu) {
     $raison = "Le jeu de ce jour n'est pas encore prêt. Reviens un peu plus tard !";
 } elseif (!$ouvert) {
     $raison = "Cette case a expiré : elle n'est plus jouable.";
-} elseif (!$test && $reste <= 0) {
+} elseif (!$test && $reste <= 0 && !$reprise) {
     $raison = 'Tu as utilisé tes ' . $essaisMax . ' essais pour cette case.';
 } else {
     $raison = '';
 }
 
-avent_entete('Jour ' . $numero, 'page-jour', ['assets/jour.js?v=2']);
+avent_entete('Jour ' . $numero, 'page-jour', ['assets/jour.js?v=3']);
 ?>
 <article class="jour"
          id="jeu-page"
@@ -86,7 +87,7 @@ avent_entete('Jour ' . $numero, 'page-jour', ['assets/jour.js?v=2']);
 
         <?php if ($peutJouer) : ?>
             <button type="button" class="bouton" id="bouton-commencer">
-                <?= $meilleur ? 'Retenter ma chance' : 'Commencer' ?>
+                <?= $reprise ? 'Reprendre ma partie' : ($meilleur ? 'Retenter ma chance' : 'Commencer') ?>
             </button>
             <p class="avertissement">Dès que tu appuies, le chronomètre démarre et l'essai est consommé.</p>
         <?php else : ?>

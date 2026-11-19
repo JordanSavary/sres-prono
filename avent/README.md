@@ -101,6 +101,19 @@ Règle d'or : **tout ce qui peut être vérifié côté serveur doit l'être** (
 d'adresse ou de réflexe qui ne peut pas être rejoué par le serveur, `verifier` doit au moins plafonner le score à ce qui
 est plausible pour `$dureeMs` (voir `jeux/flocons/server.php`).
 
+### Appels supplémentaires pendant la partie (facultatif)
+
+Pour un jeu où le serveur doit valider chaque geste (puzzle à solution secrète…), `server.php` peut fournir :
+
+| Fonction | Rôle |
+| --- | --- |
+| `action(array $config, array $requete, array &$etat, array $contexte, int $ecouleMs): array` | Reçoit `['action' => 'nom', 'donnees' => […]]` et l'état de la partie (à modifier : il est enregistré en base). Renvoie la réponse envoyée au navigateur, ou `['erreur' => '…']` pour refuser. |
+
+Côté navigateur : `api.appeler('nom', {…})` renvoie une `Promise` de la réponse JSON (`ok: true/false`). Le contrôle du chrono, de la partie en cours et de la durée maximale est fait par la plateforme (`api/action.php`).
+`verifier` reçoit alors l'état dans `$contexte['etat']` ; `config_publique` peut lire `avent_etat_lire($contexte['partie'])` pour restituer une partie après un rechargement. La table `avent_etats` est créée automatiquement au premier usage.
+
+Le manifest peut aussi contenir `"essais_max": 1` pour limiter ce jeu à un seul essai, quel que soit le réglage global.
+
 ### `game.js`
 
 ```js
@@ -135,4 +148,5 @@ window.AventJeux.<slug> = {
 
 * `quiz` — questions à choix multiple, corrigées côté serveur.
 * `pere-noel-turbo` — runner à la Jetpack Joyride, simulation à pas fixe rejouée côté serveur (voir son `README.md` pour les paramètres).
+* `lutins` — puzzle type Queens à solution unique, chaque pose vérifiée par le serveur (voir son `README.md`).
 * `flocons` — jeu de réflexe : attraper des flocons avant qu'ils ne tombent (score plafonné côté serveur).

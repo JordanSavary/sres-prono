@@ -107,7 +107,11 @@
             lancerChrono();
             module.demarrer(conteneur, reponse.config, {
                 terminer: function (payload) { terminer(payload); },
-                restant: function () { return Math.max(0, etat.fin - Date.now()); }
+                restant: function () { return Math.max(0, etat.fin - Date.now()); },
+                // Appel serveur pendant la partie : api.appeler('action', {…}) → Promise de la réponse JSON
+                appeler: function (action, donnees) {
+                    return post('api/action.php', { partie: reponse.partie.id, action: action, donnees: JSON.stringify(donnees || {}) });
+                }
             });
         }).catch(function (erreur) {
             afficherErreur(erreur.message);
