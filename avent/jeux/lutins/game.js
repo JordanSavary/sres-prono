@@ -39,6 +39,7 @@
         e.actif = false;
         if (e.minuteur) { clearInterval(e.minuteur); }
         if (e.pause) { clearTimeout(e.pause); }
+        if (e.long && e.long.timer) { clearTimeout(e.long.timer); }
         e.ecouteurs.forEach(function (l) { l[0].removeEventListener(l[1], l[2], l[3]); });
         if (e.racine && e.racine.parentNode) { e.racine.parentNode.removeChild(e.racine); }
         etat = null;
@@ -118,7 +119,7 @@
             '<div class="lut-chrono">0:00</div></div>' +
             '<p class="lut-message" aria-live="polite">&nbsp;</p>' +
             '<div class="lut-plateau"></div>' +
-            '<p class="lut-aide">Un appui : ✕ · deux appuis : lutin · trois : effacer</p>' +
+            '<p class="lut-aide">Un appui : ✕ · deux appuis : lutin · appui long sur une ✕ : effacer</p>' +
             '<div class="lut-sapins" aria-hidden="true"></div>' +
             '<div class="lut-ecran lut-accueil">' +
             '<h3>Les Lutins du Chalet</h3>' +
@@ -131,7 +132,7 @@
 
         var e = etat = {
             actif: true, racine: racine, ecouteurs: [], n: n, zones: null, grille: [], vies: viesMax,
-            posees: 0, neuf: -1, debut: 0, base: 0, minuteur: 0, pause: 0, fini: false, file: Promise.resolve(),
+            posees: 0, neuf: -1, long: null, debut: 0, base: 0, minuteur: 0, pause: 0, fini: false, file: Promise.resolve(),
             dernierAppui: { k: -1, t: 0 }
         };
         var elVies = racine.querySelector('.lut-vies');
@@ -217,6 +218,11 @@
             tic();
             e.minuteur = setInterval(tic, 250);
             ecoute(elPlateau, 'pointerdown', appui, { passive: false });
+            ecoute(elPlateau, 'pointerup', relache, { passive: false });
+            ecoute(elPlateau, 'pointercancel', annulerLong);
+            ecoute(elPlateau, 'pointermove', function (ev) {
+                if (e.long && Math.hypot(ev.clientX - e.long.x, ev.clientY - e.long.y) > 12) { annulerLong(); }
+            });
             ecoute(elPlateau, 'contextmenu', function (ev) { ev.preventDefault(); });
         }
 
@@ -249,11 +255,37 @@
             e.dernierAppui = { k: k, t: maintenant };
             var v = e.grille[r][c];
             if (v === 0) { e.grille[r][c] = 1; }
-            else if (v === 1) { e.grille[r][c] = 2; poser(r, c); }
+            else if (v === 1) {
+                // Sur une croix : appui court = lutin (au relâchement), appui long (~0,5 s) = effacer la croix.
+                annulerLong();
+                e.long = { r: r, c: c, x: ev.clientX, y: ev.clientY, fait: false, timer: setTimeout(function () {
+                    if (!e.long || e.grille[r][c] !== 1) { return; }
+                    e.long.fait = true;
+                    e.grille[r][c] = 0;
+                    try { if (navigator.vibrate) { navigator.vibrate(15); } } catch (x) { /* ignoré */ }
+                    dessinerSymboles();
+                }, 500) };
+                return;
+            }
             else if (v === 2) { return; }                 // en attente de réponse du serveur
             else if (v === 3 || v === 4) { return; }      // verrouillé
             else { e.grille[r][c] = 0; }
             dessinerSymboles();
+        }
+
+        function annulerLong() {
+            if (e.long) { clearTimeout(e.long.timer); e.long = null; }
+        }
+        function relache(ev) {
+            var l = e.long;
+            if (!l) { return; }
+            ev.preventDefault();
+            annulerLong();
+            if (!l.fait && !e.fini && e.grille[l.r][l.c] === 1) { // appui court : la croix devient un lutin
+                e.grille[l.r][l.c] = 2;
+                dessinerSymboles();
+                poser(l.r, l.c);
+            }
         }
 
         function poser(r, c) {
