@@ -10,6 +10,7 @@ $jours      = avent_jours();
 $meilleures = avent_meilleures_parties($pseudo);
 $essais     = avent_essais_utilises($pseudo);
 $essaisMax  = avent_essais_max();
+$enCours    = avent_parties_en_cours($pseudo);
 
 // Position et total du joueur
 $total = 0;
@@ -89,8 +90,8 @@ avent_decor_ciel();
                         $statut   = avent_statut_jour($n, $maintenant);
                         $meilleur = $meilleures[$n] ?? null;
                         $utilises = $essais[$n] ?? 0;
-                        $reste    = max(0, $essaisMax - $utilises);
-                        $jouable  = in_array($statut, ['disponible', 'rattrapable'], true) && $reste > 0 && !empty($jour['jeu']);
+                        $reste    = max(0, avent_essais_max($jour['jeu'] ?: null) - $utilises);
+                        $jouable  = in_array($statut, ['disponible', 'rattrapable'], true) && ($reste > 0 || isset($enCours[$n])) && !empty($jour['jeu']);
                         $classes  = ['fenetre', 'v' . (($i + intdiv($i, 6)) % 4)];
                         $etat     = '';
                         $puce     = '';

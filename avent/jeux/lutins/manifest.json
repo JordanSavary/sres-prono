@@ -1,0 +1,16 @@
+{
+    "nom": "Les Lutins du Chalet",
+    "description": "Place un lutin par ligne, par colonne et par zone de couleur, sans que deux lutins se touchent, même en diagonale. Chaque grille a une seule solution : plus tu es rapide, plus tu gagnes de points. Trois mauvais lutins et c'est la grève.",
+    "verification": "serveur",
+    "essais_max": 1,
+    "exemple": {
+        "parametres": {
+            "taille": 8,
+            "vies": 3,
+            "temps_parfait": 45,
+            "temps_limite": 120,
+            "score_min": 10,
+            "variante": 0
+        }
+    }
+}

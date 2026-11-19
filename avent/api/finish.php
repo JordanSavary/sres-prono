@@ -23,6 +23,7 @@ if (!is_array($payload)) {
 }
 
 $pdo = avent_pdo();
+avent_etat_table(); // DDL hors transaction
 $pdo->beginTransaction();
 try {
     $requete = $pdo->prepare('SELECT * FROM avent_parties WHERE id = ? AND pseudo = ? FOR UPDATE');
@@ -61,6 +62,7 @@ try {
                 'partie' => $partieId,
                 'essai'  => $partie['essai'] !== null ? (int) $partie['essai'] : null,
                 'test'   => (int) $partie['test'] === 1,
+                'etat'   => avent_etat_lire($partieId, true), // état tenu par le serveur (jeux à appels supplémentaires)
             ]);
             $score    = max(0, min(100, (int) round((float) ($resultat['score'] ?? 0))));
             $reussite = !empty($resultat['reussite']);
@@ -99,7 +101,7 @@ if (!$test) {
         'SELECT COUNT(*) FROM avent_parties WHERE pseudo = ? AND jour = ? AND test = 0 AND essai IS NOT NULL'
     );
     $requete->execute([$pseudo, $numero]);
-    $essaisRestants = max(0, avent_essais_max() - (int) $requete->fetchColumn());
+    $essaisRestants = max(0, avent_essais_max($slug) - (int) $requete->fetchColumn());
 }
 
 $statut = avent_statut_jour($numero);
