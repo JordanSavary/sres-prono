@@ -108,8 +108,9 @@ avent_json([
     'jeu' => [
         'slug'   => $slug,
         'nom'    => $jeu['nom'],
+        // Feuille de style : ?v= (date du fichier) pour que le navigateur ne garde pas une ancienne copie (le script est déjà rechargé à chaque partie).
         'script' => 'jeux/' . $slug . '/game.js',
-        'style'  => is_file(dirname(__DIR__) . '/jeux/' . $slug . '/game.css') ? 'jeux/' . $slug . '/game.css' : null,
+        'style'  => is_file(dirname(__DIR__) . '/jeux/' . $slug . '/game.css') ? 'jeux/' . $slug . '/game.css?v=' . (int) @filemtime(dirname(__DIR__) . '/jeux/' . $slug . '/game.css') : null,
     ],
     'config' => avent_config_publique($slug, $config, [
         'pseudo' => $pseudo,
