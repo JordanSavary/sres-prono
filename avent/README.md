@@ -99,7 +99,7 @@ Trois fonctions, préfixées `avent_jeu_<slug>_` (les `-` du slug deviennent `_`
 
 Règle d'or : **tout ce qui peut être vérifié côté serveur doit l'être** (réponses d'un quiz, mot du pendu…). Pour un jeu
 d'adresse ou de réflexe qui ne peut pas être rejoué par le serveur, `verifier` doit au moins plafonner le score à ce qui
-est plausible pour `$dureeMs` (voir `jeux/flocons/server.php`).
+est plausible pour `$dureeMs` (exemple historique ; `jeux/flocons/` rejoue désormais la partie, voir `jeux/flocons/server.php`).
 
 ### Appels supplémentaires pendant la partie (facultatif)
 
@@ -152,4 +152,4 @@ window.AventJeux.<slug> = {
 * `barque` — jeu de rythme « Cap sur Robinson island » : journal des impulsions rejoué côté serveur, sans appel pendant la partie (voir son `README.md`).
 * `paires` — memory de Noël 5×5 avec carte charbon : disposition secrète, chaque retournement vérifié par le serveur (voir son `README.md`).
 * `escape` — Escape Christmas : 4 énigmes à 10 s, un chiffre gagné chacune, puis code à 4 chiffres sur un cadenas ; énigmes, ordre des réponses et code restent côté serveur (voir son `README.md`).
-* `flocons` — jeu de réflexe : attraper des flocons avant qu'ils ne tombent (score plafonné côté serveur).
+* `flocons` — jeu de réflexe : attraper des flocons ❄ en évitant les flocons piégés 🔥 (3 vies) ; calendrier généré par une graine du serveur, partie rejouée côté serveur (voir son `README.md`).

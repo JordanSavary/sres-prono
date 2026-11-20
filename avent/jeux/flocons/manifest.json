@@ -1,9 +1,16 @@
 {
     "nom": "Chasse aux flocons",
-    "description": "Touche les flocons avant qu'ils ne touchent le sol. Atteins la cible avant la fin du temps !",
-    "verification": "client",
+    "description": "Touche les flocons ❄ avant qu'ils ne touchent le sol, mais fuis les flocons piégés 🔥 : chacun te coûte une vie, et à la troisième perte la chasse s'arrête. Atteins la cible avant la fin du temps !",
+    "verification": "serveur",
+    "essais_max": 1,
     "exemple": {
         "cible": 20,
-        "rythme_ms": 650
+        "rythme_ms": 650,
+        "vies": 3,
+        "piege_debut": 200,
+        "piege_fin": 333,
+        "delai_sans_piege_ms": 5000,
+        "distance_min": 280,
+        "duree_ref_ms": 100000
     }
 }
