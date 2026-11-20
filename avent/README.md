@@ -151,4 +151,5 @@ window.AventJeux.<slug> = {
 * `lutins` — puzzle type Queens à solution unique, chaque pose vérifiée par le serveur (voir son `README.md`).
 * `barque` — jeu de rythme « Cap sur Robinson island » : journal des impulsions rejoué côté serveur, sans appel pendant la partie (voir son `README.md`).
 * `paires` — memory de Noël 5×5 avec carte charbon : disposition secrète, chaque retournement vérifié par le serveur (voir son `README.md`).
+* `escape` — Escape Christmas : 4 énigmes à 10 s, un chiffre gagné chacune, puis code à 4 chiffres sur un cadenas ; énigmes, ordre des réponses et code restent côté serveur (voir son `README.md`).
 * `flocons` — jeu de réflexe : attraper des flocons avant qu'ils ne tombent (score plafonné côté serveur).

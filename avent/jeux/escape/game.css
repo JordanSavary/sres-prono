@@ -1,0 +1,62 @@
+/* Escape Christmas : panneau blanc posé dans un chalet de bois */
+.esc { position: relative; width: 100%; max-width: 520px; margin: 0 auto; padding: .6rem .5rem; border-radius: 12px; overflow: hidden; color: #3a2a1c; text-align: center;
+    background: repeating-linear-gradient(90deg, #7a4a2b 0 58px, #6a3f23 58px 60px), #7a4a2b; box-shadow: inset 0 0 0 3px #4a2a14, 0 6px 18px rgba(0,0,0,.25);
+    touch-action: manipulation; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.esc::before, .esc::after { content: ''; position: absolute; top: 6px; width: 26px; height: 8px; border-radius: 4px; background: #3b2414; opacity: .7; }
+.esc::before { left: 10px; } .esc::after { right: 10px; }
+.esc-neige { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 3; }
+.esc-neige i { position: absolute; top: -20px; color: #fff; font-style: normal; opacity: .8; animation: esc-chute linear infinite; }
+@keyframes esc-chute { from { transform: translate3d(0, 0, 0) rotate(0); } to { transform: translate3d(18px, 560px, 0) rotate(200deg); } }
+.esc-panneau { position: relative; padding: .55rem .6rem .65rem; border-radius: 14px; background: #fffdf8; box-shadow: 0 3px 0 #b9a27c, 0 0 0 3px #e9d7b4; }
+.esc-titre { margin: 0 0 .4rem; color: #c4161c; font-size: 1.5rem; line-height: 1.1; font-weight: 800; text-shadow: 0 2px 0 #f6d7a8; }
+.esc-stats { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: .3rem; }
+.esc-stats div { padding: .2rem .15rem; border-radius: 999px; background: #f3e6cb; }
+.esc-stats span { display: block; font-size: .64rem; text-transform: uppercase; letter-spacing: .04em; color: #7a5a3a; }
+.esc-stats b { font-size: 1.05rem; font-variant-numeric: tabular-nums; color: #3a2a1c; white-space: nowrap; }
+.esc-code { letter-spacing: .06em; }
+.esc-barre { height: 9px; margin: .45rem 0 .15rem; border-radius: 5px; background: #ead9b8; overflow: hidden; }
+.esc-barre i { display: block; height: 100%; width: 0; background: #4fbf6a; transition: background .3s; }
+.esc-barre.orange i { background: #f0a030; } .esc-barre.rouge i { background: #e04436; }
+.esc-message { min-height: 2.5em; margin: .25rem 0; font-size: .86rem; line-height: 1.25; font-style: italic; display: flex; align-items: center; justify-content: center; }
+.esc-message.esc-bon { color: #1f7a3a; font-weight: 700; }
+.esc-message.esc-mauvais { color: #c4161c; font-weight: 700; }
+.esc-message.esc-erreur { color: #a05a00; font-weight: 700; }
+.esc-vue[hidden], .esc-chiffre[hidden] { display: none; }
+.esc-illu { min-height: 2.6rem; font-size: 1.9rem; line-height: 1.3; letter-spacing: .08em; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; white-space: nowrap; overflow: hidden; }
+.esc-question { margin: .15rem 0 .5rem; min-height: 2.6em; font-size: 1.02rem; font-weight: 700; line-height: 1.25; display: flex; align-items: center; justify-content: center; }
+.esc-reponses { display: grid; gap: .45rem; }
+.esc-rep { background: #4fbf6a; color: #fff; box-shadow: 0 5px 0 #2f8a46; text-shadow: 0 1px 0 rgba(0,0,0,.25); width: 100%; min-height: 50px; font-size: 1.1rem; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.esc-rep.rate { background: #cfc6b4; color: #7d7466; text-shadow: none; box-shadow: 0 2px 0 #aaa08c; transform: translateY(3px); opacity: 1; cursor: default; }
+.esc-rep:active, .esc-rep.attente { transform: translateY(4px); box-shadow: 0 1px 0 #2f8a46; }
+.esc-slogan { margin: .2rem 0; font-style: italic; font-size: .9rem; line-height: 1.35; }
+.esc-regles { margin: .3rem 0 .6rem; font-size: .82rem; line-height: 1.4; }
+.esc-go { min-height: 50px; padding-inline: 1.6rem; touch-action: manipulation; }
+.esc-saisie { display: flex; justify-content: center; gap: .4rem; margin: .1rem 0 .5rem; }
+.esc-saisie b { width: 2.6rem; height: 3rem; line-height: 3rem; border-radius: 8px; background: #3a2a1c; color: #ffe08a; font-size: 1.6rem; font-variant-numeric: tabular-nums; box-shadow: inset 0 2px 4px rgba(0,0,0,.5); }
+.esc-clavier { display: grid; grid-template-columns: repeat(3, 1fr); gap: .35rem; max-width: 280px; margin: 0 auto; }
+.esc-touche { min-height: 56px; border: 0; border-radius: 10px; background: #f3e6cb; color: #3a2a1c; font-size: 1.5rem; font-weight: 800; font-family: inherit; box-shadow: 0 4px 0 #b9a27c; touch-action: manipulation; -webkit-tap-highlight-color: transparent; cursor: pointer; }
+.esc-touche.appui, .esc-touche:active { transform: translateY(3px); box-shadow: 0 1px 0 #b9a27c; }
+.esc-touche.esc-eff { font-size: .95rem; background: #ffd9d3; box-shadow: 0 4px 0 #d49a92; }
+.esc-touche.esc-ok { background: #4fbf6a; color: #fff; box-shadow: 0 4px 0 #2f8a46; }
+.esc-touche:disabled { opacity: .45; cursor: default; }
+.esc-fin h4 { margin: .3rem 0; color: #c4161c; font-size: 1.35rem; }
+.esc-bilan { margin: .3rem 0; font-size: 1.25rem; font-weight: 800; }
+.esc-chiffre { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 14px; background: #fffdf8; }
+.esc-chiffre span { font-size: 1rem; font-weight: 700; color: #7a5a3a; }
+.esc-chiffre b { font-size: 7rem; line-height: 1.1; color: #c4161c; text-shadow: 0 4px 0 #f6d7a8; animation: esc-pop .35s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes esc-pop { from { transform: scale(.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.esc-panneau.secoue { animation: esc-secousse .42s cubic-bezier(.36,.07,.19,.97); }
+@keyframes esc-secousse { 10%,90% { transform: translateX(-2px); } 20%,80% { transform: translateX(4px); } 30%,50%,70% { transform: translateX(-6px); } 40%,60% { transform: translateX(6px); } }
+.esc-rafale { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
+.esc-rafale span { position: absolute; top: 45%; font-size: 1.6rem; animation: esc-eclat 1s ease-out forwards; }
+@keyframes esc-eclat { from { transform: translate(0, 0) scale(.5); opacity: 1; } to { transform: translate(var(--dx), calc(var(--dy) * -1)) scale(1.3); opacity: 0; } }
+@media (max-width: 400px) {
+    .esc { padding: .35rem; }
+    .esc-panneau { padding: .45rem .45rem .55rem; }
+    .esc-titre { font-size: 1.35rem; margin-bottom: .3rem; }
+    .esc-barre { margin-top: .35rem; }
+    .esc-message { min-height: 2.3em; margin: .15rem 0; font-size: .82rem; }
+    .esc-illu { min-height: 2.3rem; font-size: 1.7rem; }
+    .esc-question { margin-bottom: .4rem; font-size: .98rem; }
+}
+@media (prefers-reduced-motion: reduce) { .esc-neige { display: none; } .esc-panneau.secoue, .esc-chiffre b, .esc-rafale span { animation: none; } }
