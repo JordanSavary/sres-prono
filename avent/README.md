@@ -46,7 +46,7 @@ La migration SQL (`sql/001_avent.sql`) reste à exécuter une seule fois à la m
 | Ouverture | Case J ouverte à 00h00 (Europe/Paris, heure du serveur). Le contenu d'une case verrouillée n'est jamais envoyé au navigateur. |
 | Rattrapage | Jouable du jour J au jour J+6 inclus (réglage « 7 jours »). Points complets. |
 | Essais | 2 parties par joueur et par case, le meilleur score est gardé. Une partie lancée consomme l'essai. |
-| Durée | 120 s maximum, chronomètre contrôlé par le serveur (5 s de tolérance réseau). |
+| Durée | 150 s maximum, chronomètre contrôlé par le serveur (5 s de tolérance réseau). |
 | Points | Score du jeu (0–100) × coefficient du jour boss (réglable, 2 par défaut). |
 | Jours boss | 5, 6, 12, 13, 19, 20 et 24 (modifiable dans l'administration). |
 | Classement | Somme des meilleurs points par jour. Égalité : plus de cases réussies, puis temps cumulé le plus court. Réservé aux joueurs connectés. |
@@ -150,4 +150,5 @@ window.AventJeux.<slug> = {
 * `pere-noel-turbo` — runner à la Jetpack Joyride, simulation à pas fixe rejouée côté serveur (voir son `README.md` pour les paramètres).
 * `lutins` — puzzle type Queens à solution unique, chaque pose vérifiée par le serveur (voir son `README.md`).
 * `barque` — jeu de rythme « Cap sur Robinson island » : journal des impulsions rejoué côté serveur, sans appel pendant la partie (voir son `README.md`).
+* `paires` — memory de Noël 5×5 avec carte charbon : disposition secrète, chaque retournement vérifié par le serveur (voir son `README.md`).
 * `flocons` — jeu de réflexe : attraper des flocons avant qu'ils ne tombent (score plafonné côté serveur).

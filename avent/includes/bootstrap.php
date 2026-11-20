@@ -18,7 +18,7 @@ date_default_timezone_set('Europe/Paris');
 require_once __DIR__ . '/../../includes/db.php'; // fournit $pdo
 
 const AVENT_NB_JOURS   = 24;
-const AVENT_DUREE_MAX  = 120;   // secondes : plafond absolu d'un jeu
+const AVENT_DUREE_MAX  = 150;   // secondes : plafond absolu d'un jeu
 const AVENT_GRACE_MS   = 5000;  // tolérance réseau sur le chronomètre serveur
 const AVENT_IMAGE_MAX  = 3 * 1024 * 1024;
 

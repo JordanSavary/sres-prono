@@ -1,0 +1,17 @@
+{
+    "nom": "Les Paires du Père Noël",
+    "description": "Un memory de Noël : retrouve les 12 paires le plus vite possible, mais évite la carte charbon, le Père Noël n'aime pas ça. Chaque charbon retourné coûte 3 secondes.",
+    "verification": "serveur",
+    "essais_max": 1,
+    "exemple": {
+        "parametres": {
+            "lignes": 5,
+            "colonnes": 5,
+            "duree_max": 110,
+            "temps_parfait": 35,
+            "points_min": 10,
+            "penalite": 3,
+            "emojis": ["🎅", "🎄", "⭐", "🎁", "🔔", "⛄", "🦌", "🍪", "🧦", "🕯️", "❄️", "🛷"]
+        }
+    }
+}

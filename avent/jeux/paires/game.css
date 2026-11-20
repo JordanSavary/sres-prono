@@ -1,0 +1,51 @@
+/* Les Paires du Père Noël */
+.pai { position: relative; width: 100%; max-width: 520px; margin: 0 auto; padding: .55rem .5rem .6rem; border-radius: 12px; overflow: hidden; color: #fff8e8; text-align: center;
+    background: repeating-linear-gradient(90deg, #7a4a2b 0 58px, #6a3f23 58px 60px), #7a4a2b; box-shadow: inset 0 0 0 3px #4a2a14, 0 6px 18px rgba(0,0,0,.25);
+    touch-action: manipulation; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.pai-titre { margin: 0 auto .45rem; display: inline-block; padding: .2rem .9rem; border-radius: 999px; background: #fff3dc; color: #c4161c; font-size: 1.15rem; line-height: 1.2; box-shadow: 0 2px 0 #b9a27c; }
+.pai-compteurs { display: grid; grid-template-columns: repeat(3, 1fr); gap: .35rem; }
+.pai-compteurs div { padding: .25rem .2rem; border-radius: 8px; background: rgba(34, 20, 10, .55); }
+.pai-compteurs span { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; opacity: .85; }
+.pai-compteurs b { font-size: 1.2rem; font-variant-numeric: tabular-nums; }
+.pai-barre { height: 8px; margin: .45rem 0 .1rem; border-radius: 4px; background: rgba(34, 20, 10, .6); overflow: hidden; }
+.pai-barre i { display: block; height: 100%; width: 100%; background: #6bd18a; transition: width .25s linear, background .3s; }
+.pai-barre.urgent i { background: #ff7a59; }
+.pai-message { min-height: 1.4em; margin: .35rem 0; font-size: .88rem; line-height: 1.3; font-style: italic; }
+.pai-message.pai-bon { color: #c9f0d2; }
+.pai-message.pai-mauvais { color: #ffd0c8; font-weight: 700; }
+.pai-message.pai-erreur { color: #ffe08a; font-weight: 700; }
+.pai-grille { display: grid; grid-template-columns: repeat(var(--colonnes, 5), 1fr); gap: 6px; padding: 6px; border-radius: 10px; background: #3b2414; box-shadow: 0 3px 0 #2a190b; touch-action: manipulation; }
+.pai-grille.secoue { animation: pai-secousse .42s cubic-bezier(.36,.07,.19,.97); }
+@keyframes pai-secousse { 10%,90% { transform: translateX(-2px); } 20%,80% { transform: translateX(4px); } 30%,50%,70% { transform: translateX(-6px); } 40%,60% { transform: translateX(6px); } }
+.pai-carte { position: relative; aspect-ratio: 1 / 1.08; perspective: 600px; cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.pai-int { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .35s cubic-bezier(.4, .1, .3, 1); }
+.pai-carte.retournee .pai-int { transform: rotateY(180deg); }
+.pai-dos, .pai-face { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; border-radius: 10px; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 2px 4px rgba(0,0,0,.35); }
+.pai-dos { background: #fff3dc; border: 2px solid #d9c49c; }
+.pai-dos::before { content: ''; position: absolute; inset: 4px; border: 2px dashed #c4161c; border-radius: 7px; opacity: .85; }
+.pai-dos svg { position: relative; width: 62%; height: 62%; filter: drop-shadow(0 0 0 #fff); }
+.pai-dos svg g { stroke: #4a82c4; } .pai-dos svg circle { fill: #4a82c4; }
+.pai-face { transform: rotateY(180deg); background: #fffaf0; border: 2px solid #d9c49c; font-size: clamp(1.5rem, 9vw, 2.4rem); line-height: 1; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
+.pai-face.pai-attente::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: #d9c49c; animation: pai-point .6s ease-in-out infinite alternate; }
+@keyframes pai-point { from { transform: scale(.6); opacity: .5; } to { transform: scale(1.2); opacity: 1; } }
+.pai-face.pai-charbon { background: #54545c; border-color: #2b2b30; }
+.pai-face.pai-charbon svg { width: 80%; height: 80%; }
+.pai-carte.pai-trouvee .pai-face { background: #fff1b8; border-color: #e0a92b; box-shadow: 0 0 0 2px #ffd45e, 0 2px 4px rgba(0,0,0,.35); }
+.pai-fin { margin-top: .6rem; padding: .7rem .6rem; border-radius: 10px; background: rgba(34, 20, 10, .75); }
+.pai-fin[hidden] { display: none; }
+.pai-fin h3 { margin: 0 0 .3rem; font-size: 1.15rem; }
+.pai-bilan { margin: .2rem 0; font-size: 1rem; font-weight: 700; }
+.pai-slogan { margin: .25rem 0 0; font-style: italic; font-size: .92rem; }
+.pai-ecran { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .7rem; padding: 1rem; background: rgba(34, 20, 10, .9); z-index: 2; }
+.pai-ecran[hidden] { display: none; }
+.pai-ecran h3 { margin: 0; font-size: 1.3rem; line-height: 1.15; }
+.pai-regles { margin: 0; font-size: .82rem; line-height: 1.4; max-width: 30em; }
+.pai-go { min-height: 44px; padding-inline: 1.6rem; touch-action: manipulation; }
+@media (max-width: 400px) {
+    .pai { padding: .45rem .35rem .5rem; }
+    .pai-grille { gap: 5px; padding: 5px; }
+    .pai-ecran { padding: .7rem; gap: .5rem; }
+    .pai-ecran h3 { font-size: 1.1rem; }
+    .pai-regles { font-size: .76rem; }
+}
+@media (prefers-reduced-motion: reduce) { .pai-int { transition-duration: .01s; } .pai-grille.secoue, .pai-face.pai-attente::after { animation: none; } }
