@@ -166,9 +166,11 @@ a { color: var(--or); }
 .neige-sol { position: absolute; left: -10%; right: -10%; bottom: -2px; height: 260px; background: var(--neige); border-radius: 50% 50% 0 0 / 100% 100% 0 0; pointer-events: none; }
 .deco { position: absolute; }
 .sapin { z-index: 0; }
-@media (max-width: 1140px) { .deco { display: none; } }
+/* Décor extérieur : seulement quand les marges autour du chalet l'accueillent (le chalet occupe presque toute la largeur en dessous) */
+@media (max-width: 1799px) { .deco { display: none; } }
+@media (min-width: 1800px) { .scene > .sapin:nth-child(5), .scene > .sapin:nth-child(6) { display: none; } } /* sapins intérieurs : cachés derrière le chalet large */
 
-.bonhomme { left: calc(50% + 506px); bottom: 106px; width: 80px; z-index: 3; display: flex; flex-direction: column; align-items: center; }
+.bonhomme { left: calc(50% + 810px); bottom: 106px; width: 80px; z-index: 3; display: flex; flex-direction: column; align-items: center; }
 .bonhomme > div { position: relative; background: #f8fbff; border-radius: 50%; }
 .bonhomme .chapeau { width: 40px; background: none; display: flex; flex-direction: column; align-items: center; border-radius: 0; }
 .chapeau i { display: block; width: 22px; height: 20px; background: var(--encre); border-radius: 3px 3px 0 0; }
@@ -406,6 +408,16 @@ a { color: var(--or); }
     margin: 0; padding: .7rem 1.2rem; max-width: 92vw; text-align: center;
     background: var(--creme); color: var(--encre); border: 2px solid var(--or); border-radius: 14px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, .5);
+}
+
+/* Grands écrans : un chalet plus large, plus de fenêtres par étage (le mobile et la tablette ne changent pas) */
+@media (min-width: 1101px) {
+    .chalet { max-width: 1360px; }
+    .grille { grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 32px 16px; }
+}
+@media (min-width: 1500px) {
+    .chalet { max-width: 1560px; }
+    .grille { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 30px 14px; }
 }
 
 @media (max-width: 860px) {
