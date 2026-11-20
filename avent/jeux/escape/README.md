@@ -28,4 +28,4 @@ Tests : `php avent/jeux/escape/test.php`.
 | `duree_code` (s) | 20 | 5–60 |
 | `duree_globale` (s) | 110 | 30–150 |
 
-`enigmes` : liste facultative (au moins `nb_enigmes`) d'objets `{illustration, question, reponses[3 différentes], bonne (0–2)}` ; sans elle, la réserve de 16 énigmes (`enigmes.php`) est utilisée.
+`enigmes` : liste facultative (au moins `nb_enigmes`) d'objets `{illustration, question, reponses[3 différentes], bonne (0–2)}` ; sans elle, la réserve de 16 énigmes (réponses toujours des chiffres 0–9) (`enigmes.php`) est utilisée.
