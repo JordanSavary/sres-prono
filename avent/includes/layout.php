@@ -26,7 +26,7 @@ function avent_entete(string $titre, string $classe = '', array $scripts = []): 
     <title><?= h($titre) ?> – Mystère au Gîte des Flocons</title>
     <link rel="preload" href="<?= h($base) ?>assets/fonts/bricolage-grotesque-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="icon" type="image/png" href="<?= h($racine) ?>assets/favicon.png">
-    <link rel="stylesheet" href="<?= h($base) ?>assets/avent.css?v=3">
+    <link rel="stylesheet" href="<?= h($base) ?>assets/avent.css?v=4">
 </head>
 <body class="<?= h($classe) ?>">
 <div class="neige" aria-hidden="true"></div>
