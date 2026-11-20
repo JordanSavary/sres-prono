@@ -1,0 +1,12 @@
+# Le contenu des énigmes (réponses comprises) ne doit pas être lisible par le navigateur : seul PHP lit ces fichiers.
+<IfModule mod_authz_core.c>
+    <FilesMatch "^(manifest\.json|enigmes\.php|server\.php|test\.php|README\.md)$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+    <FilesMatch "^(manifest\.json|enigmes\.php|server\.php|test\.php|README\.md)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>
