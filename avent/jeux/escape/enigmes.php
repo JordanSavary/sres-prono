@@ -2,24 +2,24 @@
 /**
  * Réserve d'énigmes par défaut (utilisée quand le contenu de la case n'en fournit pas).
  * Fichier lu uniquement par server.php : les réponses ne quittent jamais le serveur.
- * Une énigme : illustration (emojis), question, 3 réponses, « bonne » = index (0 à 2) de la bonne réponse.
- * Les 4 premières sont celles du jeu d'origine.
+ * Une énigme : illustration (emojis), question, 3 réponses (ici toujours des chiffres de 0 à 9, comme le code final),
+ * « bonne » = index (0 à 2) de la bonne réponse dans « reponses » (le serveur mélange l'ordre à chaque partie).
  */
 return [
-    ['illustration' => '⭐ ⭐ ⭐ = 9', 'question' => 'Trois étoiles valent 9. Combien vaut une étoile ?', 'reponses' => ['2', '3', '4'], 'bonne' => 1],
-    ['illustration' => '🦌🦌🦌🦌🦌🦌🦌🦌 − 🎁🎁🎁🎁🎁🎁', 'question' => '8 rennes traditionnels moins 6 cadeaux : combien reste-t-il ?', 'reponses' => ['1', '2', '3'], 'bonne' => 1],
-    ['illustration' => '🔴 🟢 🔴 🟢 🔴 ❓', 'question' => 'Quelle couleur vient ensuite ?', 'reponses' => ['Rouge', 'Vert', 'Or'], 'bonne' => 1],
-    ['illustration' => '4 < ❓ < 6', 'question' => 'Je suis plus grand que 4 et plus petit que 6. Qui suis-je ?', 'reponses' => ['4', '5', '6'], 'bonne' => 1],
-    ['illustration' => '⭐ 🎄 ⭐ ⭐ 🎁 ⭐', 'question' => 'Combien d\'étoiles vois-tu ?', 'reponses' => ['3', '4', '5'], 'bonne' => 1],
-    ['illustration' => '🎄 ⛄ 🏖️ 🎁', 'question' => 'Quel est l\'intrus (rien à voir avec l\'hiver) ?', 'reponses' => ['🎄', '🏖️', '⛄'], 'bonne' => 1],
-    ['illustration' => '2 · 4 · 6 · 8 · ❓', 'question' => 'Quel nombre vient ensuite ?', 'reponses' => ['9', '10', '12'], 'bonne' => 1],
-    ['illustration' => '🍪🍪🍪🍪🍪🍪🍪🍪🍪🍪🍪🍪', 'question' => '12 biscuits sur l\'assiette, le Père Noël en mange 5. Combien en reste-t-il ?', 'reponses' => ['6', '7', '8'], 'bonne' => 1],
-    ['illustration' => '🦌 > 🐈 > 🐢', 'question' => 'Le renne court plus vite que le chat, qui court plus vite que la tortue. Qui est le plus lent ?', 'reponses' => ['Le renne', 'Le chat', 'La tortue'], 'bonne' => 2],
-    ['illustration' => '❄️❄️❄️❄️❄️❄️❄️', 'question' => 'Combien de flocons ?', 'reponses' => ['6', '7', '8'], 'bonne' => 1],
-    ['illustration' => '⭐ · ⭐⭐ · ⭐⭐⭐ · ❓', 'question' => 'Combien d\'étoiles dans la case suivante ?', 'reponses' => ['3', '4', '5'], 'bonne' => 1],
-    ['illustration' => '🎅 × 4 sacs de 🎁🎁🎁🎁🎁', 'question' => 'Le Père Noël porte 4 sacs de 5 cadeaux. Combien de cadeaux en tout ?', 'reponses' => ['9', '20', '25'], 'bonne' => 1],
-    ['illustration' => '📅 25 décembre : Noël', 'question' => 'Noël est le 25 décembre. Quel jour est la veille ?', 'reponses' => ['23', '24', '26'], 'bonne' => 1],
-    ['illustration' => '🦌 🦌', 'question' => 'Combien de pattes ont 2 rennes en tout ?', 'reponses' => ['4', '8', '6'], 'bonne' => 1],
-    ['illustration' => '2 · 4 · 7 · 8', 'question' => 'Quel nombre est l\'intrus ?', 'reponses' => ['2', '7', '8'], 'bonne' => 1],
-    ['illustration' => '🥛 🍪 🍫 🔧', 'question' => 'Lequel n\'est pas un goûter pour le Père Noël ?', 'reponses' => ['🥛', '🔧', '🍫'], 'bonne' => 1],
+    ['illustration' => '⭐ + ⭐ = 6 · ⭐ + 🎁 = 7', 'question' => 'Combien vaut un cadeau 🎁 ?', 'reponses' => ['3', '5', '4'], 'bonne' => 2],
+    ['illustration' => '4 × 2 + 3 − 6', 'question' => 'Combien font 4 × 2 + 3 − 6 ?', 'reponses' => ['5', '6', '4'], 'bonne' => 0],
+    ['illustration' => '1 · 1 · 2 · 3 · 5 · ❓', 'question' => 'Quel chiffre vient ensuite ?', 'reponses' => ['7', '8', '9'], 'bonne' => 1],
+    ['illustration' => '9 · 7 · 5 · 3 · ❓', 'question' => 'Quel chiffre vient ensuite ?', 'reponses' => ['2', '0', '1'], 'bonne' => 2],
+    ['illustration' => '🦌🦌🦌🦌🦌🦌🦌🦌🦌 − 4 + 3', 'question' => 'Un traîneau a 9 rennes. 4 partent boire un chocolat chaud, puis 3 reviennent. Combien sont attelés ?', 'reponses' => ['8', '7', '9'], 'bonne' => 0],
+    ['illustration' => '👦 +3 ans · 👦 = 4 ans', 'question' => 'Le lutin a 3 ans de plus que son frère, qui a 4 ans. Quel âge aura le lutin dans 2 ans ?', 'reponses' => ['8', '9', '7'], 'bonne' => 1],
+    ['illustration' => '👢👢👢👢👢 − 👢👢👢', 'question' => 'Le Père Noël a 5 paires de bottes et perd 3 bottes (pas 3 paires). Combien de bottes lui reste-t-il ?', 'reponses' => ['6', '8', '7'], 'bonne' => 2],
+    ['illustration' => '🎁 Léo = Max + 2 · Max = 3', 'question' => 'Léo a 2 cadeaux de plus que Max, qui en a 3. Combien de cadeaux à eux deux ?', 'reponses' => ['8', '9', '7'], 'bonne' => 0],
+    ['illustration' => '14 ÷ 2 + 2 × 1', 'question' => 'Combien font la moitié de 14 plus le double de 1 ?', 'reponses' => ['8', '7', '9'], 'bonne' => 2],
+    ['illustration' => '🎄🎄🎁🎄🎁🎄🎄🎁🎄', 'question' => 'Combien y a-t-il de 🎄 de plus que de 🎁 ?', 'reponses' => ['4', '2', '3'], 'bonne' => 2],
+    ['illustration' => '❓ × 6 = 54', 'question' => 'Quel chiffre multiplié par 6 donne 54 ?', 'reponses' => ['9', '8', '7'], 'bonne' => 0],
+    ['illustration' => '❓ × 2 + 3 = 11', 'question' => 'Je double un chiffre et j\'ajoute 3 : j\'obtiens 11. Quel est ce chiffre ?', 'reponses' => ['3', '4', '5'], 'bonne' => 1],
+    ['illustration' => '🦌 = 4 pattes · 🧝 = 2 pattes', 'question' => 'Combien de pattes en tout pour 1 renne et 2 lutins ?', 'reponses' => ['6', '4', '8'], 'bonne' => 2],
+    ['illustration' => '🎁 = 1 · 🎄 = 2 · ⭐ = 3', 'question' => 'Combien vaut ⭐ ⭐ 🎄 🎁 ?', 'reponses' => ['8', '9', '7'], 'bonne' => 1],
+    ['illustration' => '🕯️ 9 cm · −1 cm par heure', 'question' => 'Une bougie de 9 cm fond de 1 cm par heure. Combien reste-t-il de cm après 3 heures ?', 'reponses' => ['7', '5', '6'], 'bonne' => 2],
+    ['illustration' => '🛷 20 h · il est 15 h · 2 h de préparation', 'question' => 'Le traîneau part à 20 h, il est 15 h et les rennes ont besoin de 2 h de préparation. Combien d\'heures de marge ?', 'reponses' => ['3', '5', '2'], 'bonne' => 0],
 ];
