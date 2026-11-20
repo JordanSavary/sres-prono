@@ -37,19 +37,19 @@
         racine.innerHTML =
             '<div class="esc-neige" aria-hidden="true"></div>' +
             '<div class="esc-panneau">' +
-            '<h3 class="esc-titre">Escape Christmas</h3>' +
+            '<h3 class="esc-titre">🎅 Escape Christmas</h3>' +
             '<div class="esc-stats"><div><span>Étape</span><b class="esc-etape">1/' + N + '</b></div>' +
             '<div><span>Score</span><b class="esc-score">0</b></div>' +
             '<div><span>Code</span><b class="esc-code" aria-label="0 chiffre sur ' + N + '"></b></div></div>' +
             '<div class="esc-barre" aria-hidden="true"><i></i></div>' +
             '<p class="esc-message" aria-live="polite">&nbsp;</p>' +
-            '<section class="esc-vue esc-accueil"><p class="esc-slogan">Le traîneau du Père Noël est verrouillé, et le Père Noël a oublié le code. Classique.</p>' +
+            '<section class="esc-vue esc-accueil"><div class="esc-grand" aria-hidden="true">🛷🔒</div><p class="esc-slogan"><b>Mission : déverrouiller le traîneau avant le départ !</b></p>' +
             '<p class="esc-regles">Résous ' + N + ' énigmes de ' + C.duree_enigme + ' s : chacune te donne un chiffre, affiché 2 s seulement. ' +
             'Retiens-les dans l\'ordre, puis tape le code sur le cadenas (' + C.tentatives + ' essais, ' + C.duree_code + ' s).</p>' +
             '<button type="button" class="bouton esc-go">Démarrer la mission</button></section>' +
             '<section class="esc-vue esc-enigme" hidden><div class="esc-illu" aria-hidden="true"></div><p class="esc-question"></p>' +
             '<div class="esc-reponses"></div></section>' +
-            '<section class="esc-vue esc-cadenas" hidden><div class="esc-saisie" aria-live="polite"></div>' +
+            '<section class="esc-vue esc-cadenas" hidden><div class="esc-grand" aria-hidden="true">🔐 🛷</div><div class="esc-saisie" aria-live="polite"></div>' +
             '<div class="esc-clavier"></div></section>' +
             '<section class="esc-vue esc-fin" hidden></section>' +
             '<div class="esc-chiffre" hidden><span>Retiens ce chiffre !</span><b></b></div>' +
@@ -87,7 +87,7 @@
         // Neige : flocons ❄ en CSS
         for (var f = 0; f < FLOCONS; f++) {
             var fl = document.createElement('i');
-            fl.textContent = '❄';
+            fl.textContent = Math.random() > .4 ? '❄' : '•';
             fl.style.left = Math.round(Math.random() * 96) + '%';
             fl.style.fontSize = (8 + Math.random() * 10).toFixed(0) + 'px';
             fl.style.animationDuration = (7 + Math.random() * 8).toFixed(1) + 's';
@@ -187,7 +187,7 @@
             e.bloque = true;
             envoyer('temps').then(function (rep) {
                 if (!e.actif) { return; }
-                dire(hasard(MSG_TEMPS) + ' −' + C.penalite, 'esc-mauvais');
+                dire('⏱️ ' + hasard(MSG_TEMPS) + ' −' + C.penalite, 'esc-mauvais');
                 secouer();
                 suite(rep);
             }).catch(function () {                                      // « trop tôt » (horloges légèrement décalées) : on resynchronise
@@ -203,7 +203,7 @@
                 if (!e.actif) { return; }
                 majScore(rep.score);
                 if (rep.expire) {
-                    dire(hasard(MSG_TEMPS) + ' −' + C.penalite, 'esc-mauvais');
+                    dire('⏱️ ' + hasard(MSG_TEMPS) + ' −' + C.penalite, 'esc-mauvais');
                     secouer();
                     suite(rep);
                 } else if (rep.bon) {
@@ -212,7 +212,7 @@
                     e.boutons[i].classList.remove('attente');
                     e.boutons[i].classList.add('rate');
                     e.boutons[i].disabled = true;
-                    dire(hasard(MSG_MAUVAIS) + ' −' + C.penalite, 'esc-mauvais');
+                    dire('❌ ' + hasard(MSG_MAUVAIS) + ' −' + C.penalite, 'esc-mauvais');
                     secouer();
                     e.bloque = false;
                 } else { suite(rep); }
@@ -222,7 +222,7 @@
             arreterBarre();
             e.mode = 'chiffre';
             majCode(e.nbChiffres + 1);
-            dire(hasard(MSG_BON) + ' +' + rep.gain, 'esc-bon');
+            dire('✅ ' + hasard(MSG_BON) + ' +' + rep.gain, 'esc-bon');
             rafale();
             elChiffre.querySelector('b').textContent = rep.chiffre;
             elChiffre.hidden = false;
@@ -241,7 +241,7 @@
                 b.type = 'button';
                 b.className = 'esc-touche' + (k === 'ok' ? ' esc-ok' : (k === 'eff' ? ' esc-eff' : ''));
                 b.setAttribute('data-k', k);
-                b.textContent = k === 'eff' ? 'Effacer' : (k === 'ok' ? 'OK' : k);
+                b.textContent = k === 'eff' ? '⌫' : (k === 'ok' ? 'OK' : k);
                 if (k === 'eff') { b.setAttribute('aria-label', 'Effacer'); }
                 elClavier.appendChild(b);
                 e.touches[k] = b;
@@ -284,7 +284,7 @@
                 e.saisie = '';
                 majSaisie();
                 secouer();
-                dire(hasard(MSG_CODE) + ' ' + rep.tentatives_restantes + ' essai' + (rep.tentatives_restantes > 1 ? 's' : '') + ' restant' + (rep.tentatives_restantes > 1 ? 's' : '') + '.', 'esc-mauvais');
+                dire('❌ ' + hasard(MSG_CODE) + ' ' + rep.tentatives_restantes + ' essai' + (rep.tentatives_restantes > 1 ? 's' : '') + ' restant' + (rep.tentatives_restantes > 1 ? 's' : '') + '.', 'esc-mauvais');
                 e.bloque = false;
             }).catch(panne);
         }
@@ -307,10 +307,11 @@
             elEtape.textContent = 'Fin';
             majScore(rep.score);
             var raison = rep.raison || (rep.bon ? 'code' : 'essais');
-            var titre = raison === 'code' ? 'Traîneau déverrouillé !' : (raison === 'global' ? 'Temps écoulé !' : (raison === 'delai_code' ? 'Le cadenas a gagné…' : 'Cadenas bloqué !'));
+            var titre = raison === 'code' ? 'NOËL EST SAUVÉ !' : (raison === 'global' ? 'Temps écoulé !' : (raison === 'delai_code' ? 'Le cadenas a gagné…' : 'Cadenas bloqué !'));
             var slogan = raison === 'code' ? 'Les rennes ronflent déjà de bonheur, direction le pôle Nord.'
                 : (raison === 'global' ? 'Le Père Noël a fini par prendre le train.' : 'Le traîneau reste au garage. Les cadeaux attendront l\'an prochain.');
             vFin.textContent = '';
+            var gr = document.createElement('div'); gr.className = 'esc-grand'; gr.setAttribute('aria-hidden', 'true'); gr.textContent = raison === 'code' ? '🎅🛷✨🎁' : '🛷💤'; vFin.appendChild(gr);
             var h = document.createElement('h4'), s = document.createElement('p'), q = document.createElement('p');
             h.textContent = titre;
             s.className = 'esc-bilan';
