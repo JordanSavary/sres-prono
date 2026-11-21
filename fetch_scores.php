@@ -1,5 +1,17 @@
 <?php
+session_start();
 include 'includes/db.php';
+
+if (!isset($_SESSION['utilisateur']) || $_SESSION['utilisateur'] !== 'admin') {
+    header('Location: dashboard.php');
+    exit();
+}
+if ($_SERVER['REQUEST_METHOD'] !== 'POST'
+    || !isset($_POST['csrf_token'], $_SESSION['csrf_token'])
+    || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    die('Jeton CSRF invalide. Veuillez recharger la page.');
+}
+
 date_default_timezone_set('Europe/Paris');
 
 $API_KEY  = 'a4acbb03986b4c70bd3afec8883c2c15';
@@ -10,7 +22,6 @@ $url = "{$BASE_URL}/competitions/WC/matches?season=2026&status=FINISHED";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [

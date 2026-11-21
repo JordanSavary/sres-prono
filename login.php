@@ -48,7 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch();
 
         if ($user && password_verify($password, $user['mot_de_passe'])) {
-            // Connexion réussie : on stocke le pseudo dans la session
+            // Connexion réussie : nouvel identifiant de session (anti-fixation), puis pseudo
+            session_regenerate_id(true);
             $_SESSION['utilisateur'] = $user['pseudo'];
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['login_attempts'] = 0;

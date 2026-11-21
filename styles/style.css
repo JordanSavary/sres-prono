@@ -144,17 +144,19 @@ a.btn:hover {
     background: var(--primary-hover);;
 }
 
-a.btn-supprimer {
+a.btn-supprimer, button.btn-supprimer {
     color: rgb(255, 255, 255);
     font-size: 1.2em;
     display: inline-block;
     padding: 8px 20px;
     background: var(--primary-color);
     border-radius: 8px;
+    border: none;
+    cursor: pointer;
     transition: 0.2s;
 }
 
-a.btn-supprimer:hover {
+a.btn-supprimer:hover, button.btn-supprimer:hover {
     color: darkred;
 }
 

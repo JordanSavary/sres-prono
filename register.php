@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $captcha_input = isset($_POST['captcha']) ? (int)$_POST['captcha'] : null;
     $captcha_expected = isset($_SESSION['captcha_answer']) ? (int)$_SESSION['captcha_answer'] : null;
 
-    if ($captcha_input !== $captcha_expected) {
+    if ($captcha_expected === null || $captcha_input !== $captcha_expected) {
         $message = "Captcha incorrect.";
         // Regénère une nouvelle question à la prochaine vue
         header("Location: register.php?error=captcha");
@@ -51,7 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare("INSERT INTO utilisateurs (pseudo, email, mot_de_passe) VALUES (?, ?, ?)");
             $stmt->execute([$pseudo, $email, $hashedPassword]);
 
-            // Rediriger vers la page de connexion
+            // Captcha à usage unique, puis redirection vers la connexion
+            unset($_SESSION['captcha_answer']);
             header('Location: login.php');
             exit();
         }

@@ -1,0 +1,5 @@
+# Racine du site. L'action de déploiement FTP y écrit son état de synchronisation
+# (liste complète des fichiers déployés) : il ne doit jamais être téléchargeable.
+<Files ".ftp-deploy-sync-state.json">
+    Require all denied
+</Files>
