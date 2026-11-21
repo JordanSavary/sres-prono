@@ -2,19 +2,15 @@ name: Déploiement LWS
 
 # Déploie le calendrier de l'avent (dossier avent/ + login.php + header.php) par FTP
 # à chaque push sur main, ou à la demande (onglet Actions > Déploiement LWS > Run workflow).
+# Les tests tournent sur toutes les branches ; le déploiement uniquement sur main.
 on:
   push:
-    branches: [main]
     paths:
       - 'avent/**'
       - 'login.php'
       - 'header.php'
       - '.github/workflows/deploy.yml'
   workflow_dispatch:
-
-concurrency:
-  group: deploy-lws
-  cancel-in-progress: false
 
 jobs:
   # Tests des jeux (PHP et parité PHP/JS) : le déploiement n'a lieu que s'ils passent.
@@ -31,6 +27,10 @@ jobs:
 
   deploy:
     needs: tests
+    if: github.ref == 'refs/heads/main'
+    concurrency:
+      group: deploy-lws
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
