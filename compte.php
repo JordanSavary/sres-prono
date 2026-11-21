@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'includes/db.php';
+require_once 'includes/validation.php';
 date_default_timezone_set('Europe/Paris');
 
 // Vérifier si l'utilisateur est connecté
@@ -70,7 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($selected_avatar) {
             // L'utilisateur a choisi un avatar par défaut
-            if (file_exists($selected_avatar)) {
+            if (avatar_defaut_valide($selected_avatar)
+                && file_exists($selected_avatar)) {
                 $update = $pdo->prepare("UPDATE utilisateurs SET avatar = ? WHERE pseudo = ?");
                 $update->execute([$selected_avatar, $pseudo]);
                 $message = "Avatar par défaut sélectionné.";
@@ -81,8 +83,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($file && $file['error'] === 0) {
             // L'utilisateur a uploadé un avatar personnalisé
             $mime = mime_content_type($file['tmp_name']);
-            if (in_array($mime, ['image/jpeg', 'image/png'])) {
-                $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $ext = extension_avatar($mime);
+            if ($ext) {
+                // Extension tirée du type réel, jamais du nom envoyé
                 $filename = 'avatars/' . uniqid() . '.' . $ext;
                 move_uploaded_file($file['tmp_name'], $filename);
 

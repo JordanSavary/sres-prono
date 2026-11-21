@@ -52,6 +52,8 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: 'ftps'
+          # Vérifie le certificat du serveur FTPS
+          security: strict
           port: ${{ secrets.FTP_PORT || '21' }}
           server-dir: ${{ secrets.FTP_SERVER_DIR || './' }}
           local-dir: ./deploy/

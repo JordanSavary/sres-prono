@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'includes/db.php';
+require_once 'includes/validation.php';
 date_default_timezone_set('Europe/Paris');
 
 // Déterminer si la requête vient de l'autosave (AJAX) ou d'un formulaire classique
@@ -10,6 +11,15 @@ $is_ajax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
 
 if ($is_ajax) {
     header('Content-Type: application/json');
+}
+
+if (!isset($_SESSION['utilisateur'])) {
+    if ($is_ajax) {
+        echo json_encode(['success' => false, 'error' => 'non_connecte']);
+        exit;
+    }
+    header('Location: login.php');
+    exit;
 }
 
 if (!isset($_SESSION['csrf_token'])) {
@@ -26,8 +36,8 @@ if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_tok
 
 $id_utilisateur = $_SESSION['utilisateur'];
 $id_match       = $_POST['id_match']  ?? null;
-$prono_a        = $_POST['prono_a']   ?? null;
-$prono_b        = $_POST['prono_b']   ?? null;
+$prono_a        = score_prono($_POST['prono_a'] ?? null);
+$prono_b        = score_prono($_POST['prono_b'] ?? null);
 
 if (!$id_match || $prono_a === null || $prono_b === null) {
     if ($is_ajax) {

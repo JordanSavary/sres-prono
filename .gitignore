@@ -2,3 +2,4 @@ avent/uploads/*
 !avent/uploads/.htaccess
 !avent/uploads/.gitkeep
 *.sql.local
+TODO.md

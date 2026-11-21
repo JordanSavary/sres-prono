@@ -122,11 +122,17 @@ function render_match_card($match, $pays) {
             <input type="datetime-local" class="admin-field select-date" data-field="date_match"
                    value="<?= date('Y-m-d\TH:i', strtotime($match['date_match'])) ?>">
             <span class="statut-save"></span>
-            <a href="admin_actions.php?action=delete_match&id=<?= $match['id'] ?>"
-               class="btn-supprimer"
-               onclick="return confirm('Supprimer ce match ?')">
+            <button type="submit" form="delete-match-<?= $match['id'] ?>"
+                    class="btn-supprimer">
                 <i class="fa-solid fa-trash"></i>
-            </a>
+            </button>
+        </form>
+        <form method="post" action="admin_actions.php"
+              id="delete-match-<?= $match['id'] ?>"
+              onsubmit="return confirm('Supprimer ce match ?')">
+            <input type="hidden" name="action" value="delete_match">
+            <input type="hidden" name="id" value="<?= $match['id'] ?>">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
         </form>
     </div>
     <?php

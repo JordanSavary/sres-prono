@@ -1,9 +1,18 @@
 <?php
+session_start();
 include 'includes/db.php';
+
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 $message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die('Jeton CSRF invalide. Veuillez recharger la page.');
+    }
 
     $email = $_POST['email'];
 
@@ -89,6 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php endif; ?>
                 <form method="post" action="" class="login-form">
                     <input type="email" name="email" id="email" placeholder="Email" required/>
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
                     <button class="btn-enregistrer" type="submit">Réinitialiser le mot de passe</button>
                 </form>
                 <div class="register-forget opacity">

@@ -34,7 +34,6 @@ Secrets à créer dans GitHub (*Settings → Secrets and variables → Actions �
 | `FTP_USERNAME` | identifiant FTP | oui |
 | `FTP_PASSWORD` | mot de passe FTP | oui |
 | `FTP_SERVER_DIR` | dossier du site sur le serveur, avec `/` final (ex. `./` ou `/htdocs/`) ; c'est celui qui contient `login.php` | non (défaut `./`) |
-| `FTP_PROTOCOL` | `ftp` ou `ftps` (si LWS propose le FTP sécurisé, préférer `ftps`) | non (défaut `ftp`) |
 | `FTP_PORT` | port, si différent de 21 | non |
 
 La migration SQL (`sql/001_avent.sql`) reste à exécuter une seule fois à la main dans phpMyAdmin.
