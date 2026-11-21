@@ -17,7 +17,20 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Tests des jeux (PHP et parité PHP/JS) : le déploiement n'a lieu que s'ils passent.
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tests PHP
+        run: for f in avent/jeux/*/test.php; do echo "== $f"; php "$f"; done
+
+      - name: Tests de parité PHP/JS
+        run: for f in avent/jeux/*/test.js; do echo "== $f"; node "$f"; done
+
   deploy:
+    needs: tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
